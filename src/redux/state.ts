@@ -1,4 +1,6 @@
-import {rerenderIntireTree} from "../render";
+let rerenderIntireTree =(state:any)=>{
+    console.log("State changed")
+}
 
 
 const state = {
@@ -58,12 +60,16 @@ export type MessagesType = Array<MessageType>
 export const addPost=()=>{
     const newPost={id: 4, message: state.profilePage.newPostText, likesCount: "5"}
     state.profilePage.posts.push(newPost)
+    state.profilePage.newPostText=""
     rerenderIntireTree(state)
 }
 export const updatedNewPostText=(newText:string)=>{
 
     state.profilePage.newPostText=newText
     rerenderIntireTree(state)
+}
+export const subscraber=(observer:any)=>{
+    rerenderIntireTree=observer
 }
 
 export default state

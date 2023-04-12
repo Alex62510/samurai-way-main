@@ -15,7 +15,6 @@ const MyPosts = (props: MyPostsPropsType) => {
     let postMessageRef = React.createRef<HTMLTextAreaElement>()
     const addPost = () => {
         props.addPost()
-        props.updatedNewPostText("")
     }
     const onPostChange = () => {
         postMessageRef.current && props.updatedNewPostText(postMessageRef.current.value)
