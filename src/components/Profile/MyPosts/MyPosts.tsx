@@ -1,8 +1,8 @@
 import React, {ChangeEvent, MouseEvent} from "react";
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {NewPostTextType, PostsType, updatedNewPostText} from "../../../redux/state";
-import {clear} from "@testing-library/user-event/dist/clear";
+import {NewPostTextType, PostsType} from "../../../redux/state";
+
 
 
 export type MyPostsPropsType = {
