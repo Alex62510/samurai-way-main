@@ -1,3 +1,6 @@
+const ADD_POST="ADD-POST"
+const UPDADEDNEWPOSTTEXT="UPDADEDNEWPOSTTEXT"
+
 const store = {
     _state: {
         profilePage: {
@@ -37,17 +40,19 @@ const store = {
     },
 
     dispatch (action:any) {
-if(action.type==="ADD-POST"){
+if(action.type===ADD_POST){
     const newPost = {id: 4, message: this._state.profilePage.newPostText, likesCount: "5"}
     this._state.profilePage.posts.push(newPost)
     this._state.profilePage.newPostText = ""
     this._callSubcraber(this._state)
-} else if (action.type==="UPDADEDNEWPOSTTEXT"){
+} else if (action.type===UPDADEDNEWPOSTTEXT){
     this._state.profilePage.newPostText = action.newText
     this._callSubcraber(this._state)
 }
     }
 }
+export const addPostActionCreater=()=>({type:ADD_POST})
+export const updateNewPosrTextCreater=(text:any)=>({type:UPDADEDNEWPOSTTEXT, newText:text})
 
 export type StateType = {
     profilePage: { posts: PostsType, newPostText: NewPostTextType }
