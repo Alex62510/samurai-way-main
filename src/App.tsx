@@ -12,9 +12,8 @@ import {NewPostTextType, StateType} from "./redux/state";
 
 export type AppPropsType={
     state:StateType
-    addPost:()=>void
     newPostText:NewPostTextType
-    updatedNewPostText:(newText:string)=>void
+    dispatch:any
 }
     function App (props:AppPropsType)  {
 
@@ -28,9 +27,8 @@ export type AppPropsType={
                         dialogs={props.state.messagePage.dialogs}
                         messages={props.state.messagePage.messages}/>}/>
                     <Route path='/profile' render={() => <Profile
-                        updatedNewPostText={props.updatedNewPostText}
+                        dispatch={props.dispatch}
                         posts={props.state.profilePage.posts}
-                        addPost={props.addPost}
                         newPostText={props.newPostText}/>}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>

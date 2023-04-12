@@ -25,25 +25,27 @@ const store = {
         },
         sideBar: {}
     },
-    getState() {
-        return this._state
-    },
     _callSubcraber(state: any) {
         console.log("State changed")
     },
-    addPost() {
-        const newPost = {id: 4, message: this._state.profilePage.newPostText, likesCount: "5"}
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ""
-        this._callSubcraber(this._state)
-    },
-    updatedNewPostText(newText: string) {
 
-        this._state.profilePage.newPostText = newText
-        this._callSubcraber(this._state)
+    getState() {
+        return this._state
     },
     subscraber(observer: any) {
         this._callSubcraber = observer
+    },
+
+    dispatch (action:any) {
+if(action.type==="ADD-POST"){
+    const newPost = {id: 4, message: this._state.profilePage.newPostText, likesCount: "5"}
+    this._state.profilePage.posts.push(newPost)
+    this._state.profilePage.newPostText = ""
+    this._callSubcraber(this._state)
+} else if (action.type==="UPDADEDNEWPOSTTEXT"){
+    this._state.profilePage.newPostText = action.newText
+    this._callSubcraber(this._state)
+}
     }
 }
 

@@ -9,9 +9,8 @@ const rerenderIntireTree=(state:StateType)=>{
     ReactDOM.render(
         <App
             state={state}
-            addPost={store.addPost.bind(store)}
+            dispatch={store.dispatch.bind(store)}
             newPostText={store._state.profilePage.newPostText}
-            updatedNewPostText={store.updatedNewPostText.bind(store)}
         />,
         document.getElementById('root')
     );

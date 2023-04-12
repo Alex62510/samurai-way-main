@@ -3,21 +3,19 @@ import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {NewPostTextType, PostsType} from "../../../redux/state";
 
-
-
 export type MyPostsPropsType = {
     posts: PostsType
-    addPost: () => void
+    dispatch: any
     newPostText: NewPostTextType
-    updatedNewPostText: (NewPostText: string) => void
 }
 const MyPosts = (props: MyPostsPropsType) => {
     let postMessageRef = React.createRef<HTMLTextAreaElement>()
     const addPost = () => {
-        props.addPost()
+        props.dispatch({type: "ADD-POST"})
     }
     const onPostChange = () => {
-        postMessageRef.current && props.updatedNewPostText(postMessageRef.current.value)
+        let text = postMessageRef.current && postMessageRef.current.value
+        props.dispatch({type: "UPDADEDNEWPOSTTEXT", newText: text})
     }
 
 
