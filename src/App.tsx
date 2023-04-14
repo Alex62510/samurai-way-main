@@ -24,6 +24,8 @@ export type AppPropsType={
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs' render={() => <Dialogs
+                        dispatch={props.dispatch}
+                        newMassageBody={props.state.messagePage.newMessageBody}
                         dialogs={props.state.messagePage.dialogs}
                         messages={props.state.messagePage.messages}/>}/>
                     <Route path='/profile' render={() => <Profile

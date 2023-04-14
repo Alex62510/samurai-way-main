@@ -1,19 +1,28 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {DialogsType, MessagesType} from "../../redux/state";
+import {DialogsType, MessagesType, sendMessageCreater, updateNewMessageBodyCreater} from "../../redux/state";
 
 
 export type DialogsPropsType = {
     dialogs: DialogsType
     messages: MessagesType
+    dispatch: any
+    newMassageBody: any
 }
 
 const Dialogs = (props: DialogsPropsType) => {
-    let dialogsElement = props.dialogs.map(d => < DialogItem name={d.name} id={d.id}/>)
-    let messagesElement = props.messages.map(m => <Message messageElement={m.message}/>)
+    const dialogsElement = props.dialogs.map(d => < DialogItem name={d.name} id={d.id}/>)
+    const messagesElement = props.messages.map(m => <Message messageElement={m.message}/>)
 
+    let newMassageBody = props.newMassageBody
+    const onSendMassageClick = () => {
+        props.dispatch(sendMessageCreater())
+    }
+    const onNewMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
+        props.dispatch(updateNewMessageBodyCreater(e.currentTarget.value))
+    }
 
     return (
         <div className={s.dialogs}>
@@ -21,7 +30,16 @@ const Dialogs = (props: DialogsPropsType) => {
                 {dialogsElement}
             </div>
             <div className={s.messages}>
-                {messagesElement}
+                <div>{messagesElement}</div>
+                <div>
+                    <div><textarea
+                        value={newMassageBody}
+                        onChange={onNewMessageChange}
+                        placeholder='Enter your massage'></textarea></div>
+                    <div>
+                        <button onClick={onSendMassageClick}>send</button>
+                    </div>
+                </div>
             </div>
         </div>
     );

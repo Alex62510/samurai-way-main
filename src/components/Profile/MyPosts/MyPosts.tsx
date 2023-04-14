@@ -1,7 +1,7 @@
 import React, {ChangeEvent, MouseEvent} from "react";
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {addPostActionCreater, NewPostTextType, PostsType, updateNewPosrTextCreater} from "../../../redux/state";
+import {addPostActionCreater, NewPostTextType, PostsType, updateNewPostTextCreater} from "../../../redux/state";
 
 
 export type MyPostsPropsType = {
@@ -16,7 +16,7 @@ const MyPosts = (props: MyPostsPropsType) => {
     }
     const onPostChange = () => {
         let text = postMessageRef.current && postMessageRef.current.value
-        props.dispatch(updateNewPosrTextCreater(text))
+        props.dispatch(updateNewPostTextCreater(text))
     }
 
 

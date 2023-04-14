@@ -1,5 +1,7 @@
-const ADD_POST="ADD-POST"
-const UPDADEDNEWPOSTTEXT="UPDADEDNEWPOSTTEXT"
+const ADD_POST = "ADD-POST"
+const UPDADED_NEW_POST_TEXT = "UPDADED_NEW_POST_TEXT"
+const UPDADED_NEW_MESSAGE_BODY = "UPDADED_NEW_MESSAGE_BODY"
+const SEND_MESSAGE = "SEND_MESSAGE"
 
 const store = {
     _state: {
@@ -24,7 +26,8 @@ const store = {
                 {id: 2, message: 'How are you'},
                 {id: 3, message: 'Yo'},
                 {id: 4, message: 'Yo'},
-            ]
+            ],
+            newMessageBody: ""
         },
         sideBar: {}
     },
@@ -39,24 +42,35 @@ const store = {
         this._callSubcraber = observer
     },
 
-    dispatch (action:any) {
-if(action.type===ADD_POST){
-    const newPost = {id: 4, message: this._state.profilePage.newPostText, likesCount: "5"}
-    this._state.profilePage.posts.push(newPost)
-    this._state.profilePage.newPostText = ""
-    this._callSubcraber(this._state)
-} else if (action.type===UPDADEDNEWPOSTTEXT){
-    this._state.profilePage.newPostText = action.newText
-    this._callSubcraber(this._state)
-}
+    dispatch(action: any) {
+        if (action.type === ADD_POST) {
+            const newPost = {id: 4, message: this._state.profilePage.newPostText, likesCount: "5"}
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ""
+            this._callSubcraber(this._state)
+        } else if (action.type === UPDADED_NEW_POST_TEXT) {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubcraber(this._state)
+        } else if (action.type === UPDADED_NEW_MESSAGE_BODY) {
+            this._state.messagePage.newMessageBody = action.body
+            this._callSubcraber(this._state)
+        } else if (action.type === SEND_MESSAGE) {
+            let body=this._state.messagePage.newMessageBody
+            this._state.messagePage.newMessageBody=''
+            this._state.messagePage.messages.push({id: 5, message: body})
+            this._callSubcraber(this._state)
+        }
     }
 }
-export const addPostActionCreater=()=>({type:ADD_POST})
-export const updateNewPosrTextCreater=(text:any)=>({type:UPDADEDNEWPOSTTEXT, newText:text})
+export const addPostActionCreater = () => ({type: ADD_POST})
+export const updateNewPostTextCreater = (text: any) => ({type: UPDADED_NEW_POST_TEXT, newText: text})
+export const sendMessageCreater = () => ({type: SEND_MESSAGE})
+export const updateNewMessageBodyCreater = (body: any) => ({type: UPDADED_NEW_MESSAGE_BODY, body: body})
+
 
 export type StateType = {
     profilePage: { posts: PostsType, newPostText: NewPostTextType }
-    messagePage: { dialogs: DialogsType, messages: MessagesType }
+    messagePage: { dialogs: DialogsType, messages: MessagesType,newMessageBody:string }
     sideBar: SideBarType
 }
 export type NewPostTextType = string
