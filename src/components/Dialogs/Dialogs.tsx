@@ -2,7 +2,9 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {DialogsType, MessagesType, sendMessageCreater, updateNewMessageBodyCreater} from "../../redux/state";
+import {DialogsType, MessagesType} from "../../redux/state";
+import {sendMessageCreater,updateNewMessageBodyCreater} from "../../redux/message-reducer";
+
 
 
 export type DialogsPropsType = {
@@ -21,6 +23,7 @@ const Dialogs = (props: DialogsPropsType) => {
         props.dispatch(sendMessageCreater())
     }
     const onNewMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
+        // @ts-ignore
         props.dispatch(updateNewMessageBodyCreater(e.currentTarget.value))
     }
 

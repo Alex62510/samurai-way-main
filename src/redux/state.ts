@@ -1,7 +1,6 @@
-const ADD_POST = "ADD-POST"
-const UPDADED_NEW_POST_TEXT = "UPDADED_NEW_POST_TEXT"
-const UPDADED_NEW_MESSAGE_BODY = "UPDADED_NEW_MESSAGE_BODY"
-const SEND_MESSAGE = "SEND_MESSAGE"
+import profileReducer from "./profile-reducer";
+import messageReducer from "./message-reducer";
+import sideBarReducer from "./sideBar-reducer";
 
 const store = {
     _state: {
@@ -34,43 +33,23 @@ const store = {
     _callSubcraber(state: any) {
         console.log("State changed")
     },
-
     getState() {
         return this._state
     },
     subscraber(observer: any) {
         this._callSubcraber = observer
     },
-
     dispatch(action: any) {
-        if (action.type === ADD_POST) {
-            const newPost = {id: 4, message: this._state.profilePage.newPostText, likesCount: "5"}
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ""
-            this._callSubcraber(this._state)
-        } else if (action.type === UPDADED_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.newText
-            this._callSubcraber(this._state)
-        } else if (action.type === UPDADED_NEW_MESSAGE_BODY) {
-            this._state.messagePage.newMessageBody = action.body
-            this._callSubcraber(this._state)
-        } else if (action.type === SEND_MESSAGE) {
-            let body=this._state.messagePage.newMessageBody
-            this._state.messagePage.newMessageBody=''
-            this._state.messagePage.messages.push({id: 5, message: body})
-            this._callSubcraber(this._state)
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.messagePage = messageReducer(this._state.messagePage, action)
+        this._state.sideBar = sideBarReducer(this._state.sideBar, action)
+
+        this._callSubcraber(this._state)
     }
 }
-export const addPostActionCreater = () => ({type: ADD_POST})
-export const updateNewPostTextCreater = (text: any) => ({type: UPDADED_NEW_POST_TEXT, newText: text})
-export const sendMessageCreater = () => ({type: SEND_MESSAGE})
-export const updateNewMessageBodyCreater = (body: any) => ({type: UPDADED_NEW_MESSAGE_BODY, body: body})
-
-
 export type StateType = {
     profilePage: { posts: PostsType, newPostText: NewPostTextType }
-    messagePage: { dialogs: DialogsType, messages: MessagesType,newMessageBody:string }
+    messagePage: { dialogs: DialogsType, messages: MessagesType, newMessageBody: string }
     sideBar: SideBarType
 }
 export type NewPostTextType = string
@@ -91,6 +70,5 @@ export type MessageType = {
     message: string
 }
 export type MessagesType = Array<MessageType>
-
 
 export default store
