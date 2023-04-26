@@ -9,10 +9,7 @@ import {store} from "./redux/redux-store";
 const rerenderIntireTree=(state:StateType)=>{
     ReactDOM.render(
         <App
-            state={state}
-            dispatch={store.dispatch.bind(store)}
-            newPostText={store.getState().profilePage.newPostText}
-        />,
+            store={store}/>,
         document.getElementById('root')
     );
 }
