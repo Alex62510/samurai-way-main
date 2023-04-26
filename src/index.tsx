@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import store, {StateType} from "./redux/state";
+import  {StateType} from "./redux/store";
+import {store} from "./redux/redux-store";
 
 
 const rerenderIntireTree=(state:StateType)=>{
@@ -10,10 +11,13 @@ const rerenderIntireTree=(state:StateType)=>{
         <App
             state={state}
             dispatch={store.dispatch.bind(store)}
-            newPostText={store._state.profilePage.newPostText}
+            newPostText={store.getState().profilePage.newPostText}
         />,
         document.getElementById('root')
     );
 }
 rerenderIntireTree(store.getState())
-store.subscraber(rerenderIntireTree)
+store.subscribe(()=>{
+    let state=store.getState()
+    rerenderIntireTree(state)
+})

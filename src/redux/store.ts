@@ -36,7 +36,7 @@ const store = {
     getState() {
         return this._state
     },
-    subscraber(observer: any) {
+    subscrabe(observer: any) {
         this._callSubcraber = observer
     },
     dispatch(action: any) {
