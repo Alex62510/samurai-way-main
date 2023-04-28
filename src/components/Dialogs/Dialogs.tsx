@@ -7,7 +7,6 @@ import {DialogsType, MessagesType} from "../../redux/store";
 export type DialogsPropsType = {
     dialogs: DialogsType
     messages: MessagesType
-    // dispatch: any
     newMassageBody: string
     updateNewMessageBody: (body: string) => void
     sendMessage: () => void

@@ -8,9 +8,11 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import {StoreType} from "./redux/store";
+
 
 export type AppPropsType={
-    store:any
+    store: any
 }
     function App (props:AppPropsType)  {
     return (

@@ -1,6 +1,7 @@
 import React from "react";
 import MyPosts from "../MyPosts";
 import {addPostActionCreater, updateNewPostTextCreater} from "../../../../redux/profile-reducer";
+import {StoreType} from "../../../../redux/store";
 
 export type MyPostsPropsType = {
     store:any
