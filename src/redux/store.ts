@@ -1,7 +1,7 @@
 import profileReducer from "./profile-reducer";
 import messageReducer from "./message-reducer";
 import sideBarReducer from "./sideBar-reducer";
-import {EmptyObject} from "redux";
+
 
 const store: StoreType = {
     _state: {
@@ -50,7 +50,7 @@ const store: StoreType = {
 }
 export type StateType = {
     profilePage: { posts: PostsType, newPostText: NewPostTextType }
-    messagePage: { dialogs: DialogsType, messages: MessagesType, newMessageBody: string }
+    messagePage: { dialogs: DialogsType, messages: MessagesType, newMessageBody:string  }
     sideBar: SideBarType
 }
 

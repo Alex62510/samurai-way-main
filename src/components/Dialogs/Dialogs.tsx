@@ -12,8 +12,8 @@ export type DialogsPropsType = {
     sendMessage: () => void
 }
 const Dialogs = (props: DialogsPropsType) => {
-    const dialogsElement = props.dialogs.map(d => < DialogItem name={d.name} id={d.id}/>)
-    const messagesElement = props.messages.map(m => <Message messageElement={m.message}/>)
+    const dialogsElement = props.dialogs.map(d => < DialogItem name={d.name} id={d.id} key={d.id}/>)
+    const messagesElement = props.messages.map(m => <Message messageElement={m.message} key={m.id}/>)
 
     let newMassageBody = props.newMassageBody
     const onSendMassageClick = () => {
