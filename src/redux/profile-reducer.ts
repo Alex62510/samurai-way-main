@@ -11,6 +11,15 @@ export const addPostActionCreater = () => {
 export const updateNewPostTextCreater = (text: any) => {
     return {type: UPDATED_NEW_POST_TEXT, newText: text} as const
 }
+export type ProfileInitialStateType = {
+    posts: Array<PostType>
+    newPostText: string
+}
+export type PostType = {
+    id: number
+    message: string
+    likesCount: string
+}
 let initialState = {
     posts: [
         {id: 1, message: 'Hi how are you?', likesCount: "12"},
@@ -18,14 +27,14 @@ let initialState = {
     ],
     newPostText: "It kamasytra.com"
 }
-const profileReducer = (state = initialState, action: Action) => {
+const profileReducer = (state: ProfileInitialStateType = initialState, action: Action): ProfileInitialStateType => {
     let stateCopy
     switch (action.type) {
         case ADD_POST:
             const newPost = {id: 4, message: state.newPostText, likesCount: "5"}
-            return {...state,posts: [...state.posts,newPost],newPostText: ""}
+            return {...state, posts: [...state.posts, newPost], newPostText: ""}
         case UPDATED_NEW_POST_TEXT:
-            return {...state,posts:[...state.posts], newPostText:action.newText}
+            return {...state, posts: [...state.posts], newPostText: action.newText}
         default:
             return state
     }

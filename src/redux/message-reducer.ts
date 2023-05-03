@@ -12,8 +12,21 @@ export const sendMessageCreater = () => {
 export const updateNewMessageBodyCreater = (body: string) => {
     return {type: UPDADED_NEW_MESSAGE_BODY, body: body} as const
 }
+export type InitialMessageStateType = {
+    dialogs: Array<DialogsType>
+    messages: Array<MessagesType>
+    newMessageBody: string
+}
+export type DialogsType = {
+    id: number
+    name: string
+}
+export type MessagesType = {
+    id: number
+    message: string
+}
 
-let initialState = {
+let initialState:InitialMessageStateType = {
     dialogs: [
         {id: 1, name: 'Dimich'},
         {id: 2, name: 'Andrey'},
@@ -31,7 +44,7 @@ let initialState = {
     newMessageBody: ""
 }
 
-const messageReducer = (state = initialState, action: Action) => {
+const messageReducer = (state:InitialMessageStateType = initialState, action: Action):InitialMessageStateType => {
     switch (action.type) {
         case UPDADED_NEW_MESSAGE_BODY:
             return {...state, newMessageBody: action.body}

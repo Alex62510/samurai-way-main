@@ -1,15 +1,16 @@
 import React from "react";
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
-import {NewPostTextType, PostsType} from "../../../redux/store";
+import {PostType} from "../../../redux/profile-reducer";
+
 
 
 
 export type MyPostsPropsType = {
-    posts: PostsType
+    posts: Array<PostType>
     updateNewPostText:(text:string)=>void
     addPost:()=>void
-    newPostText: NewPostTextType
+    newPostText: string
 
 }
 const MyPosts = (props: MyPostsPropsType) => {

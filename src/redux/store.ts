@@ -1,7 +1,7 @@
 import profileReducer from "./profile-reducer";
 import messageReducer from "./message-reducer";
 import sideBarReducer from "./sideBar-reducer";
-import {InitialStateType} from "./users-reducer";
+
 
 
 // const store: StoreType = {
@@ -48,39 +48,39 @@ import {InitialStateType} from "./users-reducer";
 //
 //         this._callSubcraber(this._state)
 //     }
+// // }
+// export type StateType = {
+//     profilePage: { posts: PostsType, newPostText: NewPostTextType }
+//     messagePage: { dialogs: DialogsType, messages: MessagesType, newMessageBody:string  }
+//     sideBar: SideBarType
+//     // usersPage:InitialStateType
 // }
-export type StateType = {
-    profilePage: { posts: PostsType, newPostText: NewPostTextType }
-    messagePage: { dialogs: DialogsType, messages: MessagesType, newMessageBody:string  }
-    sideBar: SideBarType
-    usersPage:InitialStateType
-}
-
-export type StoreType = {
-    _state: StateType
-    _callSubcraber: (state: StateType) => void
-    getState: () => StateType
-    subscrabe: (calback: () => void) => void
-    dispatch: (action: any) => void
-
-}
-export type NewPostTextType = string
-export type SideBarType = {}
-export type PostType = {
-    id: number
-    message: string
-    likesCount: string
-}
-export type PostsType = Array<PostType>
-export type DialogType = {
-    id: number
-    name: string
-}
-export type DialogsType = Array<DialogType>
-export type MessageType = {
-    id: number
-    message: string
-}
-export type MessagesType = Array<MessageType>
+//
+// export type StoreType = {
+//     _state: StateType
+//     _callSubcraber: (state: StateType) => void
+//     getState: () => StateType
+//     subscrabe: (calback: () => void) => void
+//     dispatch: (action: any) => void
+//
+// }
+// export type NewPostTextType = string
+// export type SideBarType = {}
+// export type PostType = {
+//     id: number
+//     message: string
+//     likesCount: string
+// }
+// export type PostsType = Array<PostType>
+// export type DialogType = {
+//     id: number
+//     name: string
+// }
+// export type DialogsType = Array<DialogType>
+// export type MessageType = {
+//     id: number
+//     message: string
+// }
+// export type MessagesType = Array<MessageType>
 
 // export default store
