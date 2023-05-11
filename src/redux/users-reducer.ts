@@ -1,5 +1,3 @@
-import {ApiUsersType} from "../components/Users/Users";
-
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET-USERS"
@@ -21,18 +19,18 @@ export const setUsersAC = (users: ApiUsersType) => {
 export type InitialUsersStateType = {
     users: ApiUsersType
 }
-// export type UserType = {
-//     id: number
-//     photoUrl:string
-//     followed: boolean
-//     fullName: string
-//     status: string
-//     location: LocationType
-// }
-// export type LocationType = {
-//     city: string
-//     country: string
-// }
+export type ApiUsersType = Array<ApiUserType>
+export type ApiUserType = {
+    name: string
+    id: number
+    uniqueUrlName: string
+    "photos": {
+        "small": string
+        "large": string
+    },
+    "status": string
+    "followed": boolean
+}
 const initialState: InitialUsersStateType = {
     users: []
 }

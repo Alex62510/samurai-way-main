@@ -1,29 +1,10 @@
 import React from 'react';
-
 import styles from "./users.module.css";
 import axios from "axios";
 import userPhoto from "../../assets/images/free-user.png"
+import {MapUserPropsType} from "./UsersContainer";
 
-// type UsersPropsType = {
-//     usersPage: ApiUsersType
-//     follow: (id: number) => void
-//     unfollow: (id: number) => void
-//     setUsers: (users: ApiUsersType) => void
-// }
-export type ApiUsersType = Array<ApiUserType>
-export type ApiUserType = {
-    name: string
-    id: number
-    uniqueUrlName: string
-    "photos": {
-        "small": string
-        "large": string
-    },
-    "status": string
-    "followed": boolean
-}
-
-class Users extends React.Component<any, any> {
+class Users extends React.Component<MapUserPropsType> {
     componentDidMount() {
         axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
             this.props.setUsers(response.data.items)
@@ -32,9 +13,8 @@ class Users extends React.Component<any, any> {
     render() {
         return (
             <div>
-
                 {
-                    this.props.usersPage.map((u: any) =>
+                    this.props.usersPage.map((u) =>
                         <div key={u.id}>
 <span>
     <div>
@@ -60,7 +40,6 @@ class Users extends React.Component<any, any> {
 </span>
                         </div>)
                 }
-
             </div>
         );
     }
