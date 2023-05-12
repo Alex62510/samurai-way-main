@@ -6,16 +6,24 @@ import {MapUserPropsType} from "./UsersContainer";
 
 class Users extends React.Component<MapUserPropsType> {
     componentDidMount() {
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+        axios.get("https://social-network.samuraijs.com/api/1.0/users?page=2&count=3").then(response => {
             this.props.setUsers(response.data.items)
         })
     }
+
     render() {
         return (
             <div>
+                <div>
+                    <span>1</span>
+                    <span className={styles.selectedPage}>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                </div>
                 {
                     this.props.usersPage.map((u) =>
-                        <div key={u.id}>
+                            <div key={u.id}>
 <span>
     <div>
         <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={styles.userPhoto}/>
@@ -28,7 +36,7 @@ class Users extends React.Component<MapUserPropsType> {
         }}>Follow</button>}
     </div>
 </span>
-                            <span>
+                                <span>
     <span>
         <div>{u.name}</div>
         <div>{u.status}</div>
@@ -38,7 +46,8 @@ class Users extends React.Component<MapUserPropsType> {
           <div>{"u.location.city"}</div>
     </span>
 </span>
-                        </div>)
+                            </div>
+                    )
                 }
             </div>
         );
