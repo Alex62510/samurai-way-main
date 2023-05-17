@@ -1,10 +1,12 @@
+import {MapStateToPropsType} from "../components/Profile/ProfileContainer";
+
 const ADD_POST = "ADD-POST"
 const UPDATED_NEW_POST_TEXT = "UPDATED_NEW_POST_TEXT"
-const SET_USER_PROFILE="SET_USER_PROFILE"
+const SET_USER_PROFILE = "SET_USER_PROFILE"
 
 type AddPostActionCreaterType = ReturnType<typeof addPostActionCreater>
 type UpdateNewPostTextCreaterType = ReturnType<typeof updateNewPostTextCreater>
-type SetUserProfileType=ReturnType<typeof setUserProfile>
+type SetUserProfileType = ReturnType<typeof setUserProfile>
 
 type Action = AddPostActionCreaterType | UpdateNewPostTextCreaterType | SetUserProfileType
 export const addPostActionCreater = () => {
@@ -13,13 +15,36 @@ export const addPostActionCreater = () => {
 export const updateNewPostTextCreater = (text: string) => {
     return {type: UPDATED_NEW_POST_TEXT, newText: text} as const
 }
-export const setUserProfile=(profile:any)=>{
-    return{type:SET_USER_PROFILE,profile} as const
+export const setUserProfile = (profile: ProfileType | null) => {
+    return {type: SET_USER_PROFILE, profile} as const
 }
 export type ProfileInitialStateType = {
     posts: Array<PostType>
     newPostText: string
-    profile:any
+    profile: ProfileType | null
+}
+export type ProfileType = {
+
+    aboutMe: string
+    contacts: {
+        facebook: string
+        website: null | string
+        vk: string
+        twitter: string
+        instagram: string
+        youtube: null | string
+        github: string
+        mainLink: null | string
+    },
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: {
+        small: string
+        large: string
+    }
+
 }
 export type PostType = {
     id: number
@@ -32,7 +57,7 @@ let initialState = {
         {id: 2, message: "It's my first post", likesCount: "44"},
     ],
     newPostText: "It kamasytra.com",
-    profile:null
+    profile: null
 }
 const profileReducer = (state: ProfileInitialStateType = initialState, action: Action): ProfileInitialStateType => {
     switch (action.type) {
@@ -42,7 +67,7 @@ const profileReducer = (state: ProfileInitialStateType = initialState, action: A
         case UPDATED_NEW_POST_TEXT:
             return {...state, posts: [...state.posts], newPostText: action.newText}
         case "SET_USER_PROFILE":
-            return {...state,profile:action.profile}
+            return {...state, profile: action.profile}
         default:
             return state
     }

@@ -1,9 +1,9 @@
 import React from "react";
 import s from './ProfileInfo.module.css'
-import {Provider} from "react-redux";
 import Preloader from "../../common/preloader/Preloader";
+import {ProfileType} from "../../../redux/profile-reducer";
 type ProfileInfoPropsType={
-    profile:any
+    profile:ProfileType | null
 }
 function ProfileInfo(props:ProfileInfoPropsType) {
     return (
@@ -17,7 +17,8 @@ function ProfileInfo(props:ProfileInfoPropsType) {
                     <div className={s.descriptionBlock}>
 
                         <img src={props.profile.photos.large}/>
-                        ava+description
+                        <div>Full name: {props.profile.fullName}</div>
+                       <div>contacts:{props.profile.contacts.github}</div>
                     </div>
                 </div>  }
         </div>
