@@ -12,7 +12,6 @@ import {AppStateType} from "../../redux/redux-store";
 import {Dispatch} from "redux";
 import axios from "axios";
 import Users from "./Users";
-import threeDots from '../../assets/images/threeDots.svg'
 import Preloader from "../common/preloader/Preloader";
 
 export type MapStateToPropsType = {
@@ -30,7 +29,6 @@ export type MapDispatchToPropsType = {
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
 }
-
 export type MapUserPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 class UsersContainer extends React.Component<MapUserPropsType> {
@@ -42,7 +40,6 @@ class UsersContainer extends React.Component<MapUserPropsType> {
             this.props.setTotalUsersCount(response.data.totalCount)
         })
     }
-
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber)
         this.props.toggleIsFetching(true)
@@ -51,13 +48,11 @@ class UsersContainer extends React.Component<MapUserPropsType> {
             this.props.setUsers(response.data.items)
         })
     }
-
     render() {
         return <>
             <div>
                 {this.props.isFetching? <Preloader />: null}
             </div>
-
             <Users
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
@@ -70,7 +65,6 @@ class UsersContainer extends React.Component<MapUserPropsType> {
         </>
     }
 }
-
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         usersPage: state.usersPage.users,
@@ -78,28 +72,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching
-    }
-}
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-    return {
-        follow: (userId: number) => {
-            dispatch(followAC(userId))
-        },
-        unfollow: (userId: number) => {
-            dispatch(unfollowAC(userId))
-        },
-        setUsers: (users: ApiUsersType) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (currentPage: number) => {
-            dispatch(setCurrentPageAC(currentPage))
-        },
-        setTotalUsersCount: (totalCount: number) => {
-            dispatch(setUsersTotalCountAC(totalCount))
-        },
-        toggleIsFetching: (isFetching) => {
-            dispatch(isFetchingAC(isFetching))
-        }
     }
 }
 export default connect(mapStateToProps, {

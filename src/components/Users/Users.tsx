@@ -2,6 +2,7 @@ import React from 'react';
 import styles from "./users.module.css";
 import userPhoto from "../../assets/images/free-user.png";
 import {ApiUsersType} from "../../redux/users-reducer";
+import {NavLink} from "react-router-dom";
 
 export type UsersPropsType = {
     totalUsersCount: number
@@ -10,7 +11,7 @@ export type UsersPropsType = {
     currentPage: number
     unfollow: (userId: number) => void
     follow: (userId: number) => void
-    onPageChanged: (pageNumber:number) => void
+    onPageChanged: (pageNumber: number) => void
 
 }
 
@@ -32,7 +33,10 @@ const Users = (props: UsersPropsType) => {
                     <div key={u.id}>
                             <span>
     <div>
-        <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={styles.userPhoto}/>
+        <NavLink to={'/Profile/' + u.id}>
+            <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={styles.userPhoto}/>
+        </NavLink>
+
     </div>
     <div>
         {u.followed ? <button onClick={() => {

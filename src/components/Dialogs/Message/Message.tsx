@@ -8,7 +8,6 @@ export type MessagePropsType ={
 
 
 const Message = (props: MessagePropsType) => {
-debugger
     return (
         <div className={s.dialog}> {props.messageElement}</div>
     )
