@@ -15,10 +15,7 @@ export type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     setUserProfile: (profile: MapStateToPropsType) => void
 }
-
-
 class ProfileContainer extends React.Component<any> {
-
     componentDidMount() {
         let userId = this.props.match.params.userId
         if(!userId) {
@@ -26,9 +23,7 @@ class ProfileContainer extends React.Component<any> {
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {
             this.props.setUserProfile(response.data)
         })
-
     }
-
     render() {
 
         return (
@@ -38,7 +33,6 @@ class ProfileContainer extends React.Component<any> {
         )
     }
 }
-
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         profile: state.profilePage.profile
