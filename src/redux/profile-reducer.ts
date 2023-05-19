@@ -72,5 +72,4 @@ const profileReducer = (state: ProfileInitialStateType = initialState, action: A
             return state
     }
 }
-
 export default profileReducer

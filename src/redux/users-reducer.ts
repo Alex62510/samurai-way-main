@@ -84,5 +84,4 @@ const usersReducer = (state: InitialUsersStateType = initialState, action: Actio
             return state
     }
 }
-
 export default usersReducer
