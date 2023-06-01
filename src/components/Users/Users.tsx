@@ -12,9 +12,7 @@ export type UsersPropsType = {
     unfollow: (userId: number) => void
     follow: (userId: number) => void
     onPageChanged: (pageNumber: number) => void
-
 }
-
 
 const Users = (props: UsersPropsType) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
