@@ -4,7 +4,6 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {DialogsType, MessagesType} from "../../redux/message-reducer";
 
-
 export type DialogsPropsType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
@@ -15,7 +14,6 @@ export type DialogsPropsType = {
 const Dialogs = (props: DialogsPropsType) => {
     const dialogsElement = props.dialogs.map(d => < DialogItem name={d.name} id={d.id} key={d.id}/>)
     const messagesElement = props.messages.map(m => <Message messageElement={m.message} key={m.id}/>)
-
     let newMassageBody = props.newMassageBody
     const onSendMassageClick = () => {
         props.sendMessage()
