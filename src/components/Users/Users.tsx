@@ -34,7 +34,6 @@ const Users = (props: UsersPropsType) => {
         <NavLink to={'/Profile/' + u.id}>
             <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={styles.userPhoto}/>
         </NavLink>
-
     </div>
     <div>
         {u.followed ? <button onClick={() => {

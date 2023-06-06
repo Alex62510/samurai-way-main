@@ -7,5 +7,4 @@ Music
         </div>
     );
 };
-
 export default Music;
