@@ -9,7 +9,6 @@ import {
     unfollowAC
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
-import axios from "axios";
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
 import { userApi} from "../../api/api";

@@ -7,7 +7,6 @@ import {ProfileType, setUserProfile} from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {withRouter} from "react-router-dom";
 
-
 export type MapProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 export type MapStateToPropsType = {
     profile: ProfileType | null
@@ -25,7 +24,6 @@ class ProfileContainer extends React.Component<any> {
         })
     }
     render() {
-
         return (
             <div className={s.content}>
                 <Profile {...this.props} profile={this.props.profile}/>

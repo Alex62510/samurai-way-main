@@ -6,7 +6,6 @@ import {mapStateToProps} from "./HeaderContainer";
 type HeaderPropsType=mapStateToProps
 
 function Header(props:HeaderPropsType) {
-
     return(
         <header className={s.header}>
             <img
