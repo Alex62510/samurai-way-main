@@ -4,7 +4,6 @@ import {NavLink} from "react-router-dom";
 import {mapStateToProps} from "./HeaderContainer";
 
 type HeaderPropsType=mapStateToProps
-
 function Header(props:HeaderPropsType) {
     return(
         <header className={s.header}>
