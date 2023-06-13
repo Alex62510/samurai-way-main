@@ -45,7 +45,6 @@ export const isFetchingAC = (isFetching: boolean) => {
 export const followingInProgressAC = (isFetching:boolean,userId: number) => {
     return {type: TOGGLE_IS_FOLLOWING_PROGRESS,isFetching, userId} as const
 }
-
 export type InitialUsersStateType = {
     users: ApiUsersType
     pageSize: number
