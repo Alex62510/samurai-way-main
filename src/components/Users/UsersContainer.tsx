@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {
     ApiUsersType,
-    followAC, isFetchingAC,
+    followAC, followingInProgressAC, isFetchingAC,
     setCurrentPageAC,
     setUsersAC,
     setUsersTotalCountAC,
@@ -19,6 +19,7 @@ export type MapStateToPropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followInProgress:number[]
 }
 export type MapDispatchToPropsType = {
     follow: (userId: number) => void
@@ -27,6 +28,7 @@ export type MapDispatchToPropsType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
+    followingInProgress: (followingInProgress: boolean,id:number) => void
 }
 export type MapUserPropsType = MapStateToPropsType & MapDispatchToPropsType
 class UsersContainer extends React.Component<MapUserPropsType> {
@@ -61,6 +63,8 @@ class UsersContainer extends React.Component<MapUserPropsType> {
                 currentPage={this.props.currentPage}
                 unfollow={this.props.unfollow}
                 follow={this.props.follow}
+                followingInProgress={this.props.followingInProgress}
+                followInProgress={this.props.followInProgress}
             />
         </>
     }
@@ -71,7 +75,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followInProgress:state.usersPage.followInProgress
     }
 }
 export default connect(mapStateToProps, {
@@ -80,4 +85,5 @@ export default connect(mapStateToProps, {
     setUsers: setUsersAC,
     setCurrentPage:setCurrentPageAC,
     setTotalUsersCount: setUsersTotalCountAC,
-    toggleIsFetching: isFetchingAC})(UsersContainer);
+    toggleIsFetching: isFetchingAC,
+    followingInProgress:followingInProgressAC})(UsersContainer);
