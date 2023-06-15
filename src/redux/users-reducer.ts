@@ -1,3 +1,6 @@
+import {Dispatch} from "redux";
+import {userApi} from "../api/api";
+
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET-USERS"
@@ -15,7 +18,7 @@ type IsFetchingType = ReturnType<typeof isFetchingAC>
 type FollowingInProgressACType = ReturnType<typeof followingInProgressAC>
 
 
-type Action =
+export type ActionUsers =
     IsFetchingType
     | FollowACType
     | UnfollowACType
@@ -74,7 +77,7 @@ const initialState: InitialUsersStateType = {
     followInProgress: []
 }
 
-const usersReducer = (state: InitialUsersStateType = initialState, action: Action): InitialUsersStateType => {
+const usersReducer = (state: InitialUsersStateType = initialState, action: ActionUsers): InitialUsersStateType => {
     switch (action.type) {
         case FOLLOW:
             return {...state, users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)}
@@ -96,4 +99,36 @@ const usersReducer = (state: InitialUsersStateType = initialState, action: Actio
             return state
     }
 }
+
+export const getUsersTC=(currentPage:number,pageSize:number)=>(dispatch:Dispatch)=>{
+    dispatch(isFetchingAC(true))
+    userApi.getUsers(currentPage,pageSize)
+        .then(response => {
+            isFetchingAC(false)
+
+            dispatch(setUsersAC(response.items))
+           dispatch(setUsersTotalCountAC(response.totalCount))
+        })
+}
+export const followUsersTC=(id:number)=>(dispatch:Dispatch)=>{
+    dispatch(followingInProgressAC(true,id))
+    userApi.followUsers(id)
+        .then(res => {
+            if (res.data.resultCode===0) {
+                dispatch(unfollowAC(id))
+            }
+          dispatch(followingInProgressAC(false,id))
+        })
+}
+export const unfollowUsersTC=(id:number)=>(dispatch:Dispatch)=>{
+    dispatch(followingInProgressAC(true,id))
+    userApi.unfollowUsers(id)
+        .then(res => {
+            if (res.data.resultCode===0) {
+                dispatch(followAC(id))
+            }
+            dispatch(followingInProgressAC(false,id))
+        })
+}
+
 export default usersReducer

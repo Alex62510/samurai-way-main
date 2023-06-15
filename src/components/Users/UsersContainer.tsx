@@ -1,17 +1,16 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {
+
     ApiUsersType,
-    followAC, followingInProgressAC, isFetchingAC,
-    setCurrentPageAC,
-    setUsersAC,
-    setUsersTotalCountAC,
-    unfollowAC
+    followingInProgressAC, followUsersTC, getUsersTC,
+    setCurrentPageAC, unfollowUsersTC,
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
 import { userApi} from "../../api/api";
+import {Dispatch} from "redux";
 
 export type MapStateToPropsType = {
     usersPage: ApiUsersType
@@ -22,38 +21,45 @@ export type MapStateToPropsType = {
     followInProgress:number[]
 }
 export type MapDispatchToPropsType = {
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
-    setUsers: (users: ApiUsersType) => void
+    follow: (userId: number) => any
+    unfollow: (userId: number) => any
     setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalCount: number) => void
-    toggleIsFetching: (isFetching: boolean) => void
     followingInProgress: (followingInProgress: boolean,id:number) => void
+    getUsers:(currentPage:number,pageSize:number)=>any
 }
 export type MapUserPropsType = MapStateToPropsType & MapDispatchToPropsType
 class UsersContainer extends React.Component<MapUserPropsType> {
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-        userApi.getUsers(this.props.currentPage,this.props.pageSize)
-            .then(response => {
-            this.props.toggleIsFetching(false)
-            this.props.setUsers(response.items)
-            this.props.setTotalUsersCount(response.totalCount)
-        })
+
+        this.props.getUsers(this.props.currentPage,this.props.pageSize)
+        // this.props.toggleIsFetching(true)
+        // userApi.getUsers(this.props.currentPage,this.props.pageSize)
+        //     .then(response => {
+        //     this.props.toggleIsFetching(false)
+        //     this.props.setUsers(response.items)
+        //     this.props.setTotalUsersCount(response.totalCount)
+        // })
     }
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber)
-        this.props.toggleIsFetching(true)
-        userApi.getUsers(pageNumber,this.props.pageSize)
-            .then(response => {
-            this.props.toggleIsFetching(false)
-            this.props.setUsers(response.items)
-        })
+        this.props.getUsers(pageNumber,this.props.pageSize)
+
+        //
+        // this.props.toggleIsFetching(true)
+        // userApi.getUsers(pageNumber,this.props.pageSize)
+        //     .then(response => {
+        // this.props.toggleIsFetching(false)
+        //     this.props.setUsers(response.items)
+        // })
     }
+
     render() {
+        // debugger
+        // console.log(this.props.isFetching)
         return <>
             <div>
                 {this.props.isFetching? <Preloader />: null}
+
             </div>
             <Users
                 totalUsersCount={this.props.totalUsersCount}
@@ -63,8 +69,9 @@ class UsersContainer extends React.Component<MapUserPropsType> {
                 currentPage={this.props.currentPage}
                 unfollow={this.props.unfollow}
                 follow={this.props.follow}
-                followingInProgress={this.props.followingInProgress}
+                // followingInProgress={this.props.followingInProgress}
                 followInProgress={this.props.followInProgress}
+
             />
         </>
     }
@@ -80,10 +87,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 export default connect(mapStateToProps, {
-    follow:followAC,
-    unfollow: unfollowAC,
-    setUsers: setUsersAC,
+    follow:followUsersTC,
+    unfollow: unfollowUsersTC,
     setCurrentPage:setCurrentPageAC,
-    setTotalUsersCount: setUsersTotalCountAC,
-    toggleIsFetching: isFetchingAC,
-    followingInProgress:followingInProgressAC})(UsersContainer);
+    followingInProgress:followingInProgressAC,
+    getUsers:getUsersTC})(UsersContainer);
