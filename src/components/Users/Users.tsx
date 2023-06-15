@@ -1,9 +1,8 @@
 import React from 'react';
 import styles from "./users.module.css";
 import userPhoto from "../../assets/images/free-user.png";
-import {ApiUsersType, followUsersTC} from "../../redux/users-reducer";
+import {ApiUsersType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
-
 
 export type UsersPropsType = {
     totalUsersCount: number
@@ -13,9 +12,7 @@ export type UsersPropsType = {
     unfollow: (userId: number) => void
     follow: (userId: number) => void
     onPageChanged: (pageNumber: number) => void
-    // followingInProgress:(value:boolean,userId:number)=>void
-    followInProgress:number[]
-
+    followInProgress: number[]
 }
 
 const Users = (props: UsersPropsType) => {
@@ -42,15 +39,15 @@ const Users = (props: UsersPropsType) => {
     <div>
         {u.followed
             ? <button
-                disabled={props.followInProgress.some(id=>id===u.id)} onClick={() => {
+                disabled={props.followInProgress.some(id => id === u.id)} onClick={() => {
                 props.follow(u.id)
 
-                }}>Unfollow</button>
+            }}>Unfollow</button>
             : <button
-                disabled={props.followInProgress.some(id=>id===u.id)} onClick={() => {
+                disabled={props.followInProgress.some(id => id === u.id)} onClick={() => {
                 props.unfollow(u.id)
 
-                }}>Follow</button>}
+            }}>Follow</button>}
     </div>
 </span>
                         <span>

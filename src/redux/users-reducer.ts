@@ -45,8 +45,8 @@ export const setUsersTotalCountAC = (totalCount: number) => {
 export const isFetchingAC = (isFetching: boolean) => {
     return {type: TOGGLE_IS_FETCHING, isFetching} as const
 }
-export const followingInProgressAC = (isFetching:boolean,userId: number) => {
-    return {type: TOGGLE_IS_FOLLOWING_PROGRESS,isFetching, userId} as const
+export const followingInProgressAC = (isFetching: boolean, userId: number) => {
+    return {type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId} as const
 }
 export type InitialUsersStateType = {
     users: ApiUsersType
@@ -92,42 +92,44 @@ const usersReducer = (state: InitialUsersStateType = initialState, action: Actio
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.isFetching}
         case TOGGLE_IS_FOLLOWING_PROGRESS:
-            return {...state, followInProgress: action.isFetching
+            return {
+                ...state, followInProgress: action.isFetching
                     ? [...state.followInProgress, action.userId]
-                    : state.followInProgress.filter(id=>id!==action.userId)}
+                    : state.followInProgress.filter(id => id !== action.userId)
+            }
         default:
             return state
     }
 }
 
-export const getUsersTC=(currentPage:number,pageSize:number)=>(dispatch:Dispatch)=>{
+export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(isFetchingAC(true))
-    userApi.getUsers(currentPage,pageSize)
+    userApi.getUsers(currentPage, pageSize)
         .then(response => {
             dispatch(isFetchingAC(false))
 
             dispatch(setUsersAC(response.items))
-           dispatch(setUsersTotalCountAC(response.totalCount))
+            dispatch(setUsersTotalCountAC(response.totalCount))
         })
 }
-export const followUsersTC=(id:number)=>(dispatch:Dispatch)=>{
-    dispatch(followingInProgressAC(true,id))
+export const followUsersTC = (id: number) => (dispatch: Dispatch) => {
+    dispatch(followingInProgressAC(true, id))
     userApi.followUsers(id)
         .then(res => {
-            if (res.data.resultCode===0) {
+            if (res.data.resultCode === 0) {
                 dispatch(unfollowAC(id))
             }
-          dispatch(followingInProgressAC(false,id))
+            dispatch(followingInProgressAC(false, id))
         })
 }
-export const unfollowUsersTC=(id:number)=>(dispatch:Dispatch)=>{
-    dispatch(followingInProgressAC(true,id))
+export const unfollowUsersTC = (id: number) => (dispatch: Dispatch) => {
+    dispatch(followingInProgressAC(true, id))
     userApi.unfollowUsers(id)
         .then(res => {
-            if (res.data.resultCode===0) {
+            if (res.data.resultCode === 0) {
                 dispatch(followAC(id))
             }
-            dispatch(followingInProgressAC(false,id))
+            dispatch(followingInProgressAC(false, id))
         })
 }
 
