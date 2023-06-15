@@ -1,9 +1,10 @@
 import React from "react";
 import s from './Header.module.css'
 import {NavLink} from "react-router-dom";
-import {mapStateToProps} from "./HeaderContainer";
+import {MapAuthType} from "./HeaderContainer";
 
-type HeaderPropsType=mapStateToProps
+
+export type HeaderPropsType=MapAuthType
 function Header(props:HeaderPropsType) {
     return(
         <header className={s.header}>

@@ -18,6 +18,9 @@ export const userApi={
    },
    unfollowUsers(id:number){
       return  instanse.post(`follow/${id}`,{})
+   },
+   authMe(){
+      return instanse.get(`auth/me`)
    }
 }
 
