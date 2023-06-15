@@ -69,7 +69,6 @@ class UsersContainer extends React.Component<MapUserPropsType> {
                 currentPage={this.props.currentPage}
                 unfollow={this.props.unfollow}
                 follow={this.props.follow}
-                // followingInProgress={this.props.followingInProgress}
                 followInProgress={this.props.followInProgress}
 
             />

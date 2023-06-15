@@ -104,7 +104,7 @@ export const getUsersTC=(currentPage:number,pageSize:number)=>(dispatch:Dispatch
     dispatch(isFetchingAC(true))
     userApi.getUsers(currentPage,pageSize)
         .then(response => {
-            isFetchingAC(false)
+            dispatch(isFetchingAC(false))
 
             dispatch(setUsersAC(response.items))
            dispatch(setUsersTotalCountAC(response.totalCount))
