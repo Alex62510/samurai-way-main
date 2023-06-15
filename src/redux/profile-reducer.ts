@@ -1,4 +1,5 @@
-import {MapStateToPropsType} from "../components/Profile/ProfileContainer";
+import {Dispatch} from "redux";
+import {userApi} from "../api/api";
 
 const ADD_POST = "ADD-POST"
 const UPDATED_NEW_POST_TEXT = "UPDATED_NEW_POST_TEXT"
@@ -72,4 +73,11 @@ const profileReducer = (state: ProfileInitialStateType = initialState, action: A
             return state
     }
 }
+
+export const ProfileGetTC=(userId:number)=>(dispatch:Dispatch)=>{
+    userApi.getProfile(userId)
+        .then(response => {
+            dispatch(setUserProfile(response.data))
+        })
+        }
 export default profileReducer

@@ -21,6 +21,9 @@ export const userApi={
    },
    authMe(){
       return instanse.get(`auth/me`)
+   },
+   getProfile(userId:number){
+      return instanse.get(`profile/` + userId)
    }
 }
 
