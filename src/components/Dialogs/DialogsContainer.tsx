@@ -14,12 +14,14 @@ type MapStateToPropsType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
     newMassageBody: string
+    isAuth:boolean
 }
 let MapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         dialogs: state.messagePage.dialogs,
         messages: state.messagePage.messages,
-        newMassageBody: state.messagePage.newMessageBody
+        newMassageBody: state.messagePage.newMessageBody,
+        isAuth: state.auth.isAuth
     }
 }
 let MapDispatchToProps = (dispatch: Dispatch) => {
