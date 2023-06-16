@@ -25,16 +25,15 @@ export type ProfileInitialStateType = {
     profile: ProfileType | null
 }
 export type ProfileType = {
-
     aboutMe: string
     contacts: {
-        facebook: string
+        facebook: null | string
         website: null | string
-        vk: string
-        twitter: string
-        instagram: string
+        vk: null | string
+        twitter:null | string
+        instagram: null | string
         youtube: null | string
-        github: string
+        github: null | string
         mainLink: null | string
     },
     lookingForAJob: boolean
@@ -45,7 +44,6 @@ export type ProfileType = {
         small: string
         large: string
     }
-
 }
 export type PostType = {
     id: number
