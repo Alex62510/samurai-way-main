@@ -30,7 +30,6 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
         }
         this.props.ProfileGetTC(userId)
     }
-
     render() {
 
         return (
@@ -40,10 +39,6 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
         )
     }
 }
-
-
-
-// AuthRedirectComponent=connect(mapStateToPropsForRedirect)(AuthRedirectComponent)
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
