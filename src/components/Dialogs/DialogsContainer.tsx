@@ -15,7 +15,7 @@ type MapStateToPropsType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
     newMassageBody: string
-    // isAuth:boolean
+
 }
 let MapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
