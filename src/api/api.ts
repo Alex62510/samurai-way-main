@@ -19,12 +19,23 @@ export const userApi={
    unfollowUsers(id:number){
       return  instanse.post(`follow/${id}`,{})
    },
+}
+export const profileApi={
+   getProfile(userId:number){
+      return instanse.get(`profile/` + userId)
+   },
+   getStatus(userId:number){
+      return instanse.get(`profile/status/` + userId)
+   },
+   updateStatus(status:string){
+      return instanse.put(`profile/status/`, {status})
+   }
+}
+
+export const authApi={
    authMe(){
       return instanse.get(`auth/me`)
    },
-   getProfile(userId:number){
-      return instanse.get(`profile/` + userId)
-   }
 }
 
 
