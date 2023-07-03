@@ -60,7 +60,6 @@ class UsersContainer extends React.Component<MapUserPropsType> {
         </>
     }
 }
-
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         usersPage: state.usersPage.users,
