@@ -34,15 +34,15 @@ const Dialogs = (props: DialogsPropsType) => {
         </div>
     );
 };
-
-const AddMassageForm = (props: any) => {
+type AddMessageFormType={handleSubmit:React.FormEventHandler<HTMLFormElement> | undefined}
+const AddMassageForm = (props:AddMessageFormType ) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field component="textarea" name="newMassageBody"  placeholder="Enter your massage"/>
                </div>
             <div>
-                <button onClick={props.onSendMassageClick}>send</button>
+                <button >send</button>
             </div>
         </form>
     )

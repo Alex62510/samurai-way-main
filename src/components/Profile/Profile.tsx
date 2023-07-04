@@ -2,14 +2,15 @@ import React from "react";
 import s from './Profile.module.css'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/Post/MyPostsContainer";
-import {ProfileType, UpdateStatusTC} from "../../redux/profile-reducer";
+import {ProfileType} from "../../redux/profile-reducer";
+import SuperMyPostContainer from "./MyPosts/Post/MyPostsContainer";
 
 
 export type ProfilepropsType = {
     profile: ProfileType | null
     status: string
     updateStatus: (status: string) => any
-    // updateStatus:
+
 }
 
 const Profile = (props: ProfilepropsType) => {
@@ -20,7 +21,7 @@ const Profile = (props: ProfilepropsType) => {
                          status={props.status}
                          updateStatus={props.updateStatus}
             />
-            <MyPostsContainer/>
+            <SuperMyPostContainer />
         </div>
     )
 }
