@@ -7,7 +7,7 @@ import {
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import Users from "./Users";
-import Preloader from "../common/preloader/Preloader";
+import Preloader from "../common/Preloader/Preloader";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 

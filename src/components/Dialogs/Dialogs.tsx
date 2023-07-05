@@ -4,6 +4,8 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {DialogsType, MessagesType} from "../../redux/message-reducer";
 import {Field, reduxForm} from "redux-form";
+import {TextArea} from "../common/FormsControls/FormsControls";
+import {maxLengthCreator, required} from "../../utils/validators/validators";
 
 export type DialogsPropsType = {
     dialogs: Array<DialogsType>
@@ -35,11 +37,13 @@ const Dialogs = (props: DialogsPropsType) => {
     );
 };
 type AddMessageFormType={handleSubmit:React.FormEventHandler<HTMLFormElement> | undefined}
+
+const maxLength50=maxLengthCreator(50)
 const AddMassageForm = (props:AddMessageFormType ) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component="textarea" name="newMassageBody"  placeholder="Enter your massage"/>
+                <Field component={TextArea} name="newMassageBody" validate={[required,maxLength50]} placeholder="Enter your massage"/>
                </div>
             <div>
                 <button >send</button>
