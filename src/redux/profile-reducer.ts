@@ -9,7 +9,7 @@ type AddPostActionCreaterType = ReturnType<typeof addPostActionCreater>
 type SetUserProfileType = ReturnType<typeof setUserProfile>
 type SetStatusACType = ReturnType<typeof setStatusAC>
 
-type Action = AddPostActionCreaterType
+export type ActionProfile = AddPostActionCreaterType
     | SetUserProfileType
     | SetStatusACType
 export const addPostActionCreater = (newPostText:string) => {
@@ -60,7 +60,7 @@ let initialState = {
     profile: null,
     status: ""
 }
-const profileReducer = (state: ProfileInitialStateType = initialState, action: Action): ProfileInitialStateType => {
+const profileReducer = (state: ProfileInitialStateType = initialState, action: ActionProfile): ProfileInitialStateType => {
     switch (action.type) {
         case ADD_POST:
             const newPost = {id: 4, message: action.newPostText, likesCount: "5"}

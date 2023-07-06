@@ -4,7 +4,7 @@ const SEND_MESSAGE = "SEND_MESSAGE"
 type SendMessageCreaterType = ReturnType<typeof sendMessageCreater>
 
 
-type Action = SendMessageCreaterType
+export type ActionMessage = SendMessageCreaterType
 
 export const sendMessageCreater = (newMessageBody:string) => {
     return {type: SEND_MESSAGE,newMessageBody} as const
@@ -42,7 +42,7 @@ let initialState:InitialMessageStateType = {
 
 }
 
-const messageReducer = (state:InitialMessageStateType = initialState, action: Action):InitialMessageStateType => {
+const messageReducer = (state:InitialMessageStateType = initialState, action: ActionMessage):InitialMessageStateType => {
     switch (action.type) {
         case SEND_MESSAGE:
             let body = action.newMessageBody

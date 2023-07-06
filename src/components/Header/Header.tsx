@@ -11,7 +11,9 @@ function Header(props:HeaderPropsType) {
             <img
                 src="https://www.adobe.com/express/create/media_127a4cd0c28c2753638768caf8967503d38d01e4c.jpeg?width=400&format=jpeg&optimize=medium"/>
             <div className={s.loginBlock}>
-                {props.isAuth ? props.login : <NavLink to={'/Login'}>Login</NavLink>}
+                {props.isAuth
+                    ? <div>{props.login}-<button onClick={props.logout}>logout</button></div>
+                    : <NavLink to={'/Login'}>Login</NavLink>}
             </div>
         </header>
     )

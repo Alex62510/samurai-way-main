@@ -15,7 +15,7 @@ export type MyPostsPropsType = {
     // newPostText: string
 
 }
-const maxLength10=maxLengthCreator(10)
+const maxLength10=maxLengthCreator(20)
 const MyPosts = (props: MyPostsPropsType) => {
     let postMessageRef = React.createRef<HTMLTextAreaElement>()
     const onAddPost = (value:string| any) => {
