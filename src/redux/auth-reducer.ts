@@ -1,6 +1,8 @@
-import {Dispatch} from "redux";
+
 import {authApi} from "../api/api";
 import {AppThunk} from "./redux-store";
+import {stopSubmit} from "redux-form";
+import {FormDataType} from "../components/Login/Login";
 
 const SET_USER_DATA = "SET-USER-DATA"
 
@@ -51,6 +53,9 @@ export const login=(email:string,password:string,rememberMe:boolean):AppThunk=>(
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(authMeTC())
+            }else {
+                let action=stopSubmit("login",{email:"Email is wrong"})
+                dispatch(action)
             }
         })
 }

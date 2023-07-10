@@ -7,7 +7,7 @@ import {login, logout} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
 
-type FormDataType = {
+export type FormDataType = {
     email: string
     password: string
     rememberMe: boolean
