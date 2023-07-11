@@ -16,6 +16,8 @@ export type OwnPropsType = MapStateToPropsType & MapDispatchToPropsType
 export type MapStateToPropsType = {
     profile: ProfileType | null
     status: string
+    autorazedUserId: number | null
+    isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
@@ -29,11 +31,13 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
         let userId = Number(this.props.match.params.userId)
         if (!userId) {
-            userId = 28839
+            userId = Number(this.props.autorazedUserId)
+            // 28839
         }
         this.props.ProfileGetTC(userId)
         this.props.GetStatusTC(userId)
     }
+
     render() {
 
         return (
@@ -52,7 +56,9 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        autorazedUserId: state.auth.id,
+        isAuth: state.auth.isAuth
     }
 }
 export default compose<React.ComponentType>(

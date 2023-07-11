@@ -1,8 +1,7 @@
-
 import {authApi} from "../api/api";
 import {AppThunk} from "./redux-store";
-import {stopSubmit} from "redux-form";
-import {FormDataType} from "../components/Login/Login";
+import {FormAction, stopSubmit} from "redux-form";
+
 
 const SET_USER_DATA = "SET-USER-DATA"
 
@@ -11,12 +10,13 @@ type SetUserDataACType = ReturnType<typeof setAuthUserDataAC>
 
 export type ActionAuth =
     | SetUserDataACType
+    | FormAction
 
 
 export type InitialAuthStateType = {
-    id: number|null,
-    email: string|null,
-    login: string|null,
+    id: number | null,
+    email: string | null,
+    login: string | null,
     isAuth: boolean
 }
 const initialState: InitialAuthStateType = {
@@ -33,37 +33,39 @@ const authReducer = (state: InitialAuthStateType = initialState, action: ActionA
             return state
     }
 }
-export const setAuthUserDataAC = (userID: number| null, email: string| null, login: string| null,isAuth:boolean) => {
+export const setAuthUserDataAC = (userID: number | null, email: string | null, login: string | null, isAuth: boolean) => {
     return {
-        type: SET_USER_DATA, payload: {userID, email, login,isAuth}
+        type: SET_USER_DATA, payload: {userID, email, login, isAuth}
     } as const
 }
 
-    export const authMeTC=():AppThunk=>(dispatch)=>{
+export const authMeTC = (): AppThunk => (dispatch) => {
     authApi.me()
         .then(res => {
             if (res.data.resultCode === 0) {
                 let {id, email, login} = res.data.data
-                dispatch(setAuthUserDataAC(id, email, login,true))
+                dispatch(setAuthUserDataAC(id, email, login, true))
             }
         })
 }
-export const login=(email:string,password:string,rememberMe:boolean):AppThunk=>(dispatch)=>{
-    authApi.login(email,password,rememberMe)
+export const login = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch) => {
+
+
+    authApi.login(email, password, rememberMe)
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(authMeTC())
-            }else {
-                let action=stopSubmit("login",{email:"Email is wrong"})
-                dispatch(action)
+            } else {
+               let message= res.data.messages.length>0? res.data.messages[0]:"Some error"
+                dispatch(stopSubmit("login", {_error: message}))
             }
         })
 }
-export const logout=():AppThunk=>(dispatch)=>{
+export const logout = (): AppThunk => (dispatch) => {
     authApi.logout()
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setAuthUserDataAC(null, null, null,false))
+                dispatch(setAuthUserDataAC(null, null, null, false))
             }
         })
 }
