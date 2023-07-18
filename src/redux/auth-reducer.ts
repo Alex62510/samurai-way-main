@@ -17,13 +17,15 @@ export type InitialAuthStateType = {
     id: number | null,
     email: string | null,
     login: string | null,
-    isAuth: boolean
+    isAuth: boolean,
+    userID:number|null
 }
 const initialState: InitialAuthStateType = {
     id: 0,
     email: '',
     login: '',
-    isAuth: false
+    isAuth: false,
+    userID:0
 }
 const authReducer = (state: InitialAuthStateType = initialState, action: ActionAuth): InitialAuthStateType => {
     switch (action.type) {

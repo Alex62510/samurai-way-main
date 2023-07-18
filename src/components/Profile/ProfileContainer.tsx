@@ -30,9 +30,11 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OwnPropsT
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
         let userId = Number(this.props.match.params.userId)
+        debugger
         if (!userId) {
-            userId = Number(this.props.autorazedUserId)
-            // 28839
+            userId =Number(this.props.autorazedUserId)
+            //   28839
+
         }
         this.props.ProfileGetTC(userId)
         this.props.GetStatusTC(userId)
@@ -54,10 +56,11 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    debugger
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
-        autorazedUserId: state.auth.id,
+        autorazedUserId: state.auth.userID,
         isAuth: state.auth.isAuth
     }
 }
