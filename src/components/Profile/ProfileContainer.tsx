@@ -30,7 +30,7 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OwnPropsT
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
         let userId = Number(this.props.match.params.userId)
-        debugger
+
         if (!userId) {
             userId =Number(this.props.autorazedUserId)
             //   28839

@@ -6,9 +6,9 @@ import {authMeTC, logout} from "../../redux/auth-reducer";
 
 
 class HeaderContainer extends React.Component<MapAuthType> {
-    componentDidMount() {
-        this.props.authMeTC()
-    }
+    // componentDidMount() {
+    //     this.props.authMeTC()
+    // }
     render() {
         return <Header {...this.props} isAuth={this.props.isAuth} login={this.props.login} />
     }
@@ -26,8 +26,8 @@ const mapStateToProps = (state: AppStateType): MapStateToProps=> {
     }
 }
 export type MapDispatchToProps = {
-    authMeTC:()=>any
+    // authMeTC:()=>any
     logout:any
 }
 export type MapAuthType=MapStateToProps & MapDispatchToProps
-export default connect(mapStateToProps, {authMeTC,logout})(HeaderContainer);
+export default connect(mapStateToProps, {logout})(HeaderContainer);

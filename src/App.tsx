@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 
 import Navbar from "./components/Navbar/Navbar";
 
-import {BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter, Route, RouteComponentProps, withRouter} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -12,25 +12,44 @@ import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
+import {connect} from "react-redux";
+import {authMeTC} from "./redux/auth-reducer"
+import {compose} from "redux";
 
-    function App ()  {
-    return (
-        <BrowserRouter>
-            <div className={'app-wrapper'}>
-                <HeaderContainer/>
-                <Navbar/>
-                <div className='app-wrapper-content'>
-                    <Route path='/Dialogs' render={() => <DialogsContainer />}/>
-                    <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
-                    <Route path='/Users' render={() => <UsersContainer/>}/>
-                    <Route path='/Login' component={Login}/>
-                    <Route path='/News' component={News}/>
-                    <Route path='/Music' component={Music}/>
-                    <Route path='/Settings' component={Settings}/>
-                </div>
-            </div>
-        </BrowserRouter>
-    )
+
+export type MapAppPropsType= MapDispatchToProps&RouteComponentProps
+export type MapDispatchToProps = {
+    authMeTC: () => any
 }
-export default App
+
+class App extends React.Component<MapAppPropsType> {
+    componentDidMount() {
+        this.props.authMeTC()
+    }
+    render() {
+
+        return (
+            <BrowserRouter>
+                <div className={'app-wrapper'}>
+                    <HeaderContainer/>
+                    <Navbar/>
+                    <div className='app-wrapper-content'>
+                        <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
+                        <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
+                        <Route path='/Users' render={() => <UsersContainer/>}/>
+                        <Route path='/Login' component={Login}/>
+                        <Route path='/News' component={News}/>
+                        <Route path='/Music' component={Music}/>
+                        <Route path='/Settings' component={Settings}/>
+                    </div>
+                </div>
+            </BrowserRouter>
+        )
+
+    }
+}
+
+export default compose<React.ComponentType>(
+    connect(null, {authMeTC}))(App)
+
 
