@@ -104,6 +104,7 @@ const usersReducer = (state: InitialUsersStateType = initialState, action: Actio
 
 export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(isFetchingAC(true))
+    dispatch(setCurrentPageAC(currentPage))
     userApi.getUsers(currentPage, pageSize)
         .then(response => {
             dispatch(isFetchingAC(false))
