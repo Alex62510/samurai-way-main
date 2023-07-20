@@ -27,7 +27,7 @@ const MyPosts = (props: MyPostsPropsType) => {
             <h3>My posts</h3>
             <AddNewPostsReduxForm onSubmit={onAddPost}/>
             <div className={s.posts}>
-                {props.posts.map((p,index) =>{<Post message={p.message} likesCount={p.likesCount} key={index}/>})}
+                {props.posts.map(p =><Post message={p.message} likesCount={p.likesCount} />)}
             </div>
         </div>
     )
