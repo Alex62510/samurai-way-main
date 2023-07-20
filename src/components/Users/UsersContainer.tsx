@@ -70,11 +70,11 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         followInProgress: state.usersPage.followInProgress
     }
 }
-const WithRedirect=WithAuthRedirect(UsersContainer)
+
 export default connect(mapStateToProps, {
     follow: followUsersTC,
     unfollow: unfollowUsersTC,
     setCurrentPage: setCurrentPageAC,
     followingInProgress: followingInProgressAC,
     getUsers: getUsersTC
-})(WithRedirect);
+})(UsersContainer);

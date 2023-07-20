@@ -33,7 +33,9 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
         if (!userId) {
             userId =Number(this.props.autorazedUserId)
-            //   28839
+           if(!userId){
+               this.props.history.push("/login")
+           }
 
         }
         this.props.ProfileGetTC(userId)
@@ -56,7 +58,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
-    debugger
+
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
