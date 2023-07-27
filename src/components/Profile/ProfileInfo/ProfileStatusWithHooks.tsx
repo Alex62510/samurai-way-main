@@ -20,7 +20,6 @@ useEffect(()=>{
     }
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
         setStatus(e.currentTarget.value)
-
     }
 
     return (
