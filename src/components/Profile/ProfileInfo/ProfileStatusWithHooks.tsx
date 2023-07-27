@@ -3,9 +3,7 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 export type ProfileStatusPropsType = {
     status: string
     updateStatus: (status: string) => any
-
 }
-
 const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
 
     const [editMode, setEditMode] = useState<boolean>(false)
