@@ -23,7 +23,9 @@ const MyPosts=React.memo((props: MyPostsPropsType)=> {
             <h3>My posts</h3>
             <AddNewPostsReduxForm onSubmit={onAddPost}/>
             <div className={s.posts}>
-                {props.posts.map((p, index) => <Post message={p.message} likesCount={p.likesCount}
+                {[...props.posts]
+                    .reverse()
+                    .map((p, index) => <Post message={p.message} likesCount={p.likesCount}
                                                      key={index}/>)}
             </div>
         </div>
