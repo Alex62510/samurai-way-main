@@ -4,16 +4,22 @@ import {profileApi} from "../api/api";
 const ADD_POST = "ADD-POST"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
 const SET_STATUS = "SET_STATUS"
+const DELETE_POST = "DELETE-POST"
 
 type AddPostActionCreaterType = ReturnType<typeof addPostActionCreater>
 type SetUserProfileType = ReturnType<typeof setUserProfile>
 type SetStatusACType = ReturnType<typeof setStatusAC>
+type DeletePost = ReturnType<typeof deletePost>
 
 export type ActionProfile = AddPostActionCreaterType
     | SetUserProfileType
     | SetStatusACType
-export const addPostActionCreater = (newPostText:string) => {
-    return {type: ADD_POST,newPostText} as const
+    | DeletePost
+export const addPostActionCreater = (newPostText: string) => {
+    return {type: ADD_POST, newPostText} as const
+}
+export const deletePost = (postId: number) => {
+    return {type: DELETE_POST, postId} as const
 }
 export const setUserProfile = (profile: ProfileType | null) => {
     return {type: SET_USER_PROFILE, profile} as const
@@ -68,7 +74,9 @@ const profileReducer = (state: ProfileInitialStateType = initialState, action: A
         case "SET_USER_PROFILE":
             return {...state, profile: action.profile}
         case SET_STATUS:
-            return {...state,status:action.status}
+            return {...state, status: action.status}
+        case DELETE_POST:
+            return {...state,posts:state.posts.filter(t=>t.id!==action.postId)}
         default:
             return state
     }
@@ -80,18 +88,18 @@ export const ProfileGetTC = (userId: number) => (dispatch: Dispatch) => {
             dispatch(setUserProfile(response.data))
         })
 }
-export const GetStatusTC = (userId:number) => (dispatch: Dispatch) => {
+export const GetStatusTC = (userId: number) => (dispatch: Dispatch) => {
 
     profileApi.getStatus(userId)
         .then(res => {
             dispatch(setStatusAC(res.data))
         })
 }
-export const UpdateStatusTC = (status:string) => (dispatch: Dispatch) => {
+export const UpdateStatusTC = (status: string) => (dispatch: Dispatch) => {
     profileApi.updateStatus(status)
         .then(res => {
 
-            if(res.data.resultCode===0){
+            if (res.data.resultCode === 0) {
                 dispatch(setStatusAC(status))
             }
         })
