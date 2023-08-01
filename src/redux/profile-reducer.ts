@@ -1,27 +1,27 @@
 import {Dispatch} from "redux";
 import {profileApi} from "../api/api";
 
-const ADD_POST = "ADD-POST"
-const SET_USER_PROFILE = "SET_USER_PROFILE"
-const SET_STATUS = "SET_STATUS"
-const DELETE_POST = "DELETE-POST"
+const ADD_POST = "profile/ADD-POST"
+const SET_USER_PROFILE = "profile/SET_USER_PROFILE"
+const SET_STATUS = "profile/SET_STATUS"
+const DELETE_POST = "profile/DELETE-POST"
 
-type AddPostActionCreaterType = ReturnType<typeof addPostActionCreater>
-type SetUserProfileType = ReturnType<typeof setUserProfile>
+type AddPostActionCreaterType = ReturnType<typeof addPostAC>
+type SetUserProfileType = ReturnType<typeof setUserProfileAC>
 type SetStatusACType = ReturnType<typeof setStatusAC>
-type DeletePost = ReturnType<typeof deletePost>
+type DeletePost = ReturnType<typeof deletePostAC>
 
 export type ActionProfile = AddPostActionCreaterType
     | SetUserProfileType
     | SetStatusACType
     | DeletePost
-export const addPostActionCreater = (newPostText: string) => {
+export const addPostAC = (newPostText: string) => {
     return {type: ADD_POST, newPostText} as const
 }
-export const deletePost = (postId: number) => {
+export const deletePostAC = (postId: number) => {
     return {type: DELETE_POST, postId} as const
 }
-export const setUserProfile = (profile: ProfileType | null) => {
+export const setUserProfileAC = (profile: ProfileType | null) => {
     return {type: SET_USER_PROFILE, profile} as const
 }
 export const setStatusAC = (status: string) => {
@@ -71,37 +71,28 @@ const profileReducer = (state: ProfileInitialStateType = initialState, action: A
         case ADD_POST:
             const newPost = {id: 4, message: action.newPostText, likesCount: "5"}
             return {...state, posts: [...state.posts, newPost]}
-        case "SET_USER_PROFILE":
+        case SET_USER_PROFILE:
             return {...state, profile: action.profile}
         case SET_STATUS:
             return {...state, status: action.status}
         case DELETE_POST:
-            return {...state,posts:state.posts.filter(t=>t.id!==action.postId)}
+            return {...state, posts: state.posts.filter(t => t.id !== action.postId)}
         default:
             return state
     }
 }
-
-export const ProfileGetTC = (userId: number) => (dispatch: Dispatch) => {
-    profileApi.getProfile(userId)
-        .then(response => {
-            dispatch(setUserProfile(response.data))
-        })
+export const ProfileGetTC = (userId: number) => async (dispatch: Dispatch) => {
+    const res = await profileApi.getProfile(userId)
+    dispatch(setUserProfileAC(res.data))
 }
-export const GetStatusTC = (userId: number) => (dispatch: Dispatch) => {
-
-    profileApi.getStatus(userId)
-        .then(res => {
-            dispatch(setStatusAC(res.data))
-        })
+export const GetStatusTC = (userId: number) => async (dispatch: Dispatch) => {
+    const res = await profileApi.getStatus(userId)
+    dispatch(setStatusAC(res.data))
 }
-export const UpdateStatusTC = (status: string) => (dispatch: Dispatch) => {
-    profileApi.updateStatus(status)
-        .then(res => {
-
-            if (res.data.resultCode === 0) {
-                dispatch(setStatusAC(status))
-            }
-        })
+export const UpdateStatusTC = (status: string) => async (dispatch: Dispatch) => {
+    const res = await profileApi.updateStatus(status)
+    if (res.data.resultCode === 0) {
+        dispatch(setStatusAC(status))
+    }
 }
 export default profileReducer

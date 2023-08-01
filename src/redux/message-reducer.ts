@@ -1,8 +1,7 @@
 
-const SEND_MESSAGE = "SEND_MESSAGE"
+const SEND_MESSAGE = "message/SEND_MESSAGE"
 
 type SendMessageCreaterType = ReturnType<typeof sendMessageCreater>
-
 
 export type ActionMessage = SendMessageCreaterType
 

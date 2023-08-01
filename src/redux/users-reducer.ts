@@ -1,13 +1,13 @@
 import {Dispatch} from "redux";
 import {userApi} from "../api/api";
 
-const FOLLOW = "FOLLOW"
-const UNFOLLOW = "UNFOLLOW"
-const SET_USERS = "SET-USERS"
-const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
-const SET_USERS_TOTAL_COUNT = "SET_USERS_TOTAL_COUNT"
-const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"
-const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS"
+const FOLLOW = "samurai/user/FOLLOW"
+const UNFOLLOW = "samurai/user/UNFOLLOW"
+const SET_USERS = "samurai/user/SET-USERS"
+const SET_CURRENT_PAGE = "samurai/user/SET_CURRENT_PAGE"
+const SET_USERS_TOTAL_COUNT = "samurai/user/SET_USERS_TOTAL_COUNT"
+const TOGGLE_IS_FETCHING = "samurai/user/TOGGLE_IS_FETCHING"
+const TOGGLE_IS_FOLLOWING_PROGRESS = "samurai/user/TOGGLE_IS_FOLLOWING_PROGRESS"
 
 type FollowACType = ReturnType<typeof followAC>
 type UnfollowACType = ReturnType<typeof unfollowAC>
@@ -16,7 +16,6 @@ type SetCurrentPageType = ReturnType<typeof setCurrentPageAC>
 type setUsersTotalCountType = ReturnType<typeof setUsersTotalCountAC>
 type IsFetchingType = ReturnType<typeof isFetchingAC>
 type FollowingInProgressACType = ReturnType<typeof followingInProgressAC>
-
 
 export type ActionUsers =
     IsFetchingType
@@ -101,37 +100,31 @@ const usersReducer = (state: InitialUsersStateType = initialState, action: Actio
             return state
     }
 }
-
-export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+export const getUsersTC = (currentPage: number, pageSize: number) => async (dispatch: Dispatch) => {
     dispatch(isFetchingAC(true))
     dispatch(setCurrentPageAC(currentPage))
-    userApi.getUsers(currentPage, pageSize)
-        .then(response => {
-            dispatch(isFetchingAC(false))
+    const res = await userApi.getUsers(currentPage, pageSize)
+    dispatch(isFetchingAC(false))
+    dispatch(setUsersAC(res.items))
+    dispatch(setUsersTotalCountAC(res.totalCount))
 
-            dispatch(setUsersAC(response.items))
-            dispatch(setUsersTotalCountAC(response.totalCount))
-        })
 }
-export const followUsersTC = (id: number) => (dispatch: Dispatch) => {
+export const followUsersTC = (id: number) => async (dispatch: Dispatch) => {
+    const apiMethod = userApi.followUsers.bind(userApi)
+    const actionCreator = unfollowAC
+    followUnfollow(dispatch, id, apiMethod, actionCreator)
+}
+export const unfollowUsersTC = (id: number) => async (dispatch: Dispatch) => {
+    const apiMethod = userApi.unfollowUsers.bind(userApi)
+    const actionCreator = followAC
+    followUnfollow(dispatch, id, apiMethod, actionCreator)
+}
+const followUnfollow = async (dispatch: Dispatch, id: number, apiMethod: any, actionCreator: any) => {
     dispatch(followingInProgressAC(true, id))
-    userApi.followUsers(id)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(unfollowAC(id))
-            }
-            dispatch(followingInProgressAC(false, id))
-        })
+    const res = await apiMethod(id)
+    if (res.data.resultCode === 0) {
+        dispatch(actionCreator(id))
+    }
+    dispatch(followingInProgressAC(false, id))
 }
-export const unfollowUsersTC = (id: number) => (dispatch: Dispatch) => {
-    dispatch(followingInProgressAC(true, id))
-    userApi.unfollowUsers(id)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(followAC(id))
-            }
-            dispatch(followingInProgressAC(false, id))
-        })
-}
-
 export default usersReducer
