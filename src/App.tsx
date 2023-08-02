@@ -19,25 +19,23 @@ import {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 
 
-export type MapAppPropsType= MapStateToPropsType&MapDispatchToProps&RouteComponentProps
- type MapDispatchToProps = {
+export type MapAppPropsType = MapStateToPropsType & MapDispatchToProps & RouteComponentProps
+type MapDispatchToProps = {
     initializedApp: () => any
 }
- type MapStateToPropsType={
-     initialized:boolean
- }
-
+type MapStateToPropsType = {
+    initialized: boolean
+}
 
 class App extends React.Component<MapAppPropsType> {
     componentDidMount() {
         this.props.initializedApp()
 
     }
-
     render() {
-if(!this.props.initialized){
-  return  <Preloader/>
-}
+        if (!this.props.initialized) {
+            return <Preloader/>
+        }
         return (
             <BrowserRouter>
                 <div className={'app-wrapper'}>
@@ -58,9 +56,10 @@ if(!this.props.initialized){
 
     }
 }
-const mapStateToProps=(state:AppStateType): MapStateToPropsType=>{
+
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        initialized:state.app.initialized
+        initialized: state.app.initialized
     }
 }
 export default compose<React.ComponentType>(

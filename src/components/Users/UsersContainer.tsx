@@ -20,7 +20,6 @@ import {
     getUsers
 } from "../../redux/users-selectors";
 
-
 export type MapStateToPropsType = {
     usersPage: ApiUsersType
     pageSize: number
@@ -49,12 +48,9 @@ class UsersContainer extends React.Component<MapUserPropsType> {
     }
 
     render() {
-        // debugger
-        // console.log(this.props.isFetching)
         return <>
             <div>
                 {this.props.isFetching ? <Preloader/> : null}
-
             </div>
             <Users
                 totalUsersCount={this.props.totalUsersCount}
@@ -65,11 +61,11 @@ class UsersContainer extends React.Component<MapUserPropsType> {
                 unfollow={this.props.unfollow}
                 follow={this.props.follow}
                 followInProgress={this.props.followInProgress}
-
             />
         </>
     }
 }
+
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         usersPage: getUsers(state),
@@ -80,17 +76,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         followInProgress: getFollowInProgress(state)
     }
 }
-// const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
-//     return {
-//         usersPage: state.usersPage.users,
-//         pageSize: state.usersPage.pageSize,
-//         totalUsersCount: state.usersPage.totalUsersCount,
-//         currentPage: state.usersPage.currentPage,
-//         isFetching: state.usersPage.isFetching,
-//         followInProgress: state.usersPage.followInProgress
-//     }
-// }
-
 export default connect(mapStateToProps, {
     follow: followUsersTC,
     unfollow: unfollowUsersTC,

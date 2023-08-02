@@ -2,20 +2,20 @@ import React from "react";
 import s from './ProfileInfo.module.css'
 import Preloader from "../../common/Preloader/Preloader";
 import {ProfileType} from "../../../redux/profile-reducer";
-import ProfileStatus from "./ProfileStatus";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 
-type ProfileInfoPropsType={
-    profile:ProfileType | null
-    status:string
-    updateStatus:(status: string) => any
+type ProfileInfoPropsType = {
+    profile: ProfileType | null
+    status: string
+    updateStatus: (status: string) => any
 }
-function ProfileInfo(props:ProfileInfoPropsType) {
+
+function ProfileInfo(props: ProfileInfoPropsType) {
     return (
         <div>
             {
-                !props.profile ? <Preloader/>: <div>
+                !props.profile ? <Preloader/> : <div>
                     <div>
                         <img
                             src={"https://wonder-day.com/wp-content/uploads/2020/04/wonder-day-images-rainbow-37-1024x576.jpg"}/>
@@ -25,9 +25,9 @@ function ProfileInfo(props:ProfileInfoPropsType) {
                         <img src={props.profile.photos.large}/>
                         <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
                         <div>Full name: {props.profile.fullName}</div>
-                       <div>contacts:{props.profile.contacts.github}</div>
+                        <div>contacts:{props.profile.contacts.github}</div>
                     </div>
-                </div>  }
+                </div>}
         </div>
     )
 }
