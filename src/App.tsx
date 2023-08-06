@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
-
 import Navbar from "./components/Navbar/Navbar";
-
 import {BrowserRouter, Route, RouteComponentProps} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";

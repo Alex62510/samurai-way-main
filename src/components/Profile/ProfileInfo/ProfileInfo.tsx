@@ -4,13 +4,11 @@ import Preloader from "../../common/Preloader/Preloader";
 import {ProfileType} from "../../../redux/profile-reducer";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
-
 type ProfileInfoPropsType = {
     profile: ProfileType | null
     status: string
     updateStatus: (status: string) => any
 }
-
 function ProfileInfo(props: ProfileInfoPropsType) {
     return (
         <div>
@@ -21,7 +19,6 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                             src={"https://wonder-day.com/wp-content/uploads/2020/04/wonder-day-images-rainbow-37-1024x576.jpg"}/>
                     </div>
                     <div className={s.descriptionBlock}>
-
                         <img src={props.profile.photos.large}/>
                         <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
                         <div>Full name: {props.profile.fullName}</div>
@@ -31,5 +28,4 @@ function ProfileInfo(props: ProfileInfoPropsType) {
         </div>
     )
 }
-
 export default ProfileInfo;
