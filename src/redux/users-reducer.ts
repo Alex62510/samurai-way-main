@@ -69,7 +69,7 @@ export type ApiUserType = {
 }
 const initialState: InitialUsersStateType = {
     users: [],
-    pageSize: 100,
+    pageSize: 50,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,

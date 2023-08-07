@@ -4,7 +4,7 @@ import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
 
 export type UsersPropsType = {
-    totalUsersCount: number
+    totalItemsCount: number
     pageSize: number
     usersPage: ApiUsersType
     currentPage: number
@@ -12,16 +12,19 @@ export type UsersPropsType = {
     follow: (userId: number) => void
     onPageChanged: (pageNumber: number) => void
     followInProgress: number[]
-}
-const Users = (props: UsersPropsType) => {
 
+}
+
+const Users = (props: UsersPropsType) => {
+    const portionSize=10
     return (
         <div>
             <Paginator
+                portionSize={portionSize}
                 onPageChanged={props.onPageChanged}
                 pageSize={props.pageSize}
                 currentPage={props.currentPage}
-                totalUsersCount={props.totalUsersCount}
+                totalItemsCount={props.totalItemsCount}
             />
             {props.usersPage.map((u, index) =>
                     <div key={u.id}>

@@ -23,7 +23,7 @@ import {
 export type MapStateToPropsType = {
     usersPage: ApiUsersType
     pageSize: number
-    totalUsersCount: number
+    totalItemsCount: number
     currentPage: number
     isFetching: boolean
     followInProgress: number[]
@@ -35,6 +35,7 @@ export type MapDispatchToPropsType = {
     followingInProgress: (followingInProgress: boolean, id: number) => void
     getUsers: (currentPage: number, pageSize: number) => any
 }
+
 export type MapUserPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 class UsersContainer extends React.Component<MapUserPropsType> {
@@ -53,7 +54,7 @@ class UsersContainer extends React.Component<MapUserPropsType> {
                 {this.props.isFetching ? <Preloader/> : null}
             </div>
             <Users
-                totalUsersCount={this.props.totalUsersCount}
+                totalItemsCount={this.props.totalItemsCount}
                 pageSize={this.props.pageSize}
                 usersPage={this.props.usersPage}
                 onPageChanged={this.onPageChanged}
@@ -70,7 +71,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         usersPage: getUsers(state),
         pageSize: getPageSize(state),
-        totalUsersCount: getTotalUsersCount(state),
+        totalItemsCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         followInProgress: getFollowInProgress(state)
