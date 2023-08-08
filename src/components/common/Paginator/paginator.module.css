@@ -8,10 +8,12 @@
 .pageNumber {
     padding: 2px;
     border: 1px solid grey;
+    
 }
 .selectedPage {
     font-weight: bold;
-    border-color: black;
+    border: 1px solid black;
+    padding: 2px;
 }
 .unSelectedPage {
     padding: 2px;
