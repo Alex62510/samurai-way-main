@@ -3,6 +3,7 @@ import s from './ProfileInfo.module.css'
 import Preloader from "../../common/Preloader/Preloader";
 import {ProfileType} from "../../../redux/profile-reducer";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+import userPhoto from "../../../assets/images/free-user.png";
 
 type ProfileInfoPropsType = {
     profile: ProfileType | null
@@ -19,7 +20,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                             src={"https://wonder-day.com/wp-content/uploads/2020/04/wonder-day-images-rainbow-37-1024x576.jpg"}/>
                     </div>
                     <div className={s.descriptionBlock}>
-                        <img src={props.profile.photos.large}/>
+                        <img src={props.profile.photos.large || userPhoto} className={s.avatarPhoto}/>
                         <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
                         <div>Full name: {props.profile.fullName}</div>
                         <div>contacts:{props.profile.contacts.github}</div>

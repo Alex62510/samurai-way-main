@@ -28,18 +28,27 @@ type MapDispatchToPropsType = {
 type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OwnPropsType
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
-    componentDidMount() {
+    refreshProfile(){
         let userId = Number(this.props.match.params.userId)
 
         if (!userId) {
             userId =Number(this.props.autorazedUserId)
-           if(!userId){
-               this.props.history.push("/login")
-           }
+            if(!userId){
+                this.props.history.push("/login")
+            }
 
         }
         this.props.ProfileGetTC(userId)
         this.props.GetStatusTC(userId)
+    }
+    componentDidMount() {
+        this.refreshProfile()
+    }
+    componentDidUpdate(prevProps: Readonly<ProfileContainerPropsType>, prevState: Readonly<{}>, snapshot?: any) {
+       if(this.props.match.params.userId!==prevProps.match.params.userId){
+           this.refreshProfile()
+       }
+
     }
 
     render() {
