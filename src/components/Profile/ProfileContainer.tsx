@@ -8,7 +8,6 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
 
-
 type PathParamsType = {
     userId: string
 }
@@ -30,13 +29,11 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OwnPropsT
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     refreshProfile(){
         let userId = Number(this.props.match.params.userId)
-
         if (!userId) {
             userId =Number(this.props.autorazedUserId)
             if(!userId){
                 this.props.history.push("/login")
             }
-
         }
         this.props.ProfileGetTC(userId)
         this.props.GetStatusTC(userId)
@@ -48,9 +45,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
        if(this.props.match.params.userId!==prevProps.match.params.userId){
            this.refreshProfile()
        }
-
     }
-
     render() {
 
         return (
