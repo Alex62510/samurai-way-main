@@ -1,20 +1,24 @@
 import {Dispatch} from "redux";
 import {profileApi} from "../api/api";
+import profile from "../components/Profile/Profile";
 
 const ADD_POST = "profile/ADD-POST"
 const SET_USER_PROFILE = "profile/SET_USER_PROFILE"
 const SET_STATUS = "profile/SET_STATUS"
 const DELETE_POST = "profile/DELETE-POST"
+const SAVE_PHOTO = "profile/SAVE_PHOTO"
 
 type AddPostActionCreaterType = ReturnType<typeof addPostAC>
 type SetUserProfileType = ReturnType<typeof setUserProfileAC>
 type SetStatusACType = ReturnType<typeof setStatusAC>
 type DeletePost = ReturnType<typeof deletePostAC>
+type SavePhoto = ReturnType<typeof savePhotoSucsessAC>
 
 export type ActionProfile = AddPostActionCreaterType
     | SetUserProfileType
     | SetStatusACType
     | DeletePost
+    | SavePhoto
 export const addPostAC = (newPostText: string) => {
     return {type: ADD_POST, newPostText} as const
 }
@@ -27,14 +31,17 @@ export const setUserProfileAC = (profile: ProfileType | null) => {
 export const setStatusAC = (status: string) => {
     return {type: SET_STATUS, status} as const
 }
+export const savePhotoSucsessAC = (photos: any) => {
+    return {type: SAVE_PHOTO, photos} as const
+}
 export type ProfileInitialStateType = {
     posts: Array<PostType>
     profile: ProfileType | null
     status: string
 }
 export type ProfileType = {
-    aboutMe: string
-    contacts: {
+    aboutMe?: string
+    contacts?: {
         facebook: null | string
         website: null | string
         vk: null | string
@@ -44,13 +51,13 @@ export type ProfileType = {
         github: null | string
         mainLink: null | string
     },
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    userId: number
+    lookingForAJob?: boolean
+    lookingForAJobDescription?: string
+    fullName?: string
+    userId?: number
     photos: {
-        small: string
-        large: string
+        large?: string,
+        small?: string
     }
 }
 export type PostType = {
@@ -77,6 +84,8 @@ const profileReducer = (state: ProfileInitialStateType = initialState, action: A
             return {...state, status: action.status}
         case DELETE_POST:
             return {...state, posts: state.posts.filter(t => t.id !== action.postId)}
+        case SAVE_PHOTO:
+            return {...state, profile: {...state.profile, photos:  action.photos}}
         default:
             return state
     }
@@ -93,6 +102,12 @@ export const UpdateStatusTC = (status: string) => async (dispatch: Dispatch) => 
     const res = await profileApi.updateStatus(status)
     if (res.data.resultCode === 0) {
         dispatch(setStatusAC(status))
+    }
+}
+export const savePhotoTC = (file: string) => async (dispatch: Dispatch) => {
+    const res = await profileApi.savePhoto(file)
+    if (res.data.resultCode === 0) {
+        dispatch(savePhotoSucsessAC(res.data.data.photos))
     }
 }
 export default profileReducer

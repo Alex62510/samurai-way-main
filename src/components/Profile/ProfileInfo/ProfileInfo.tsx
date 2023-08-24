@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent, ChangeEventHandler} from "react";
 import s from './ProfileInfo.module.css'
 import Preloader from "../../common/Preloader/Preloader";
 import {ProfileType} from "../../../redux/profile-reducer";
@@ -9,8 +9,15 @@ type ProfileInfoPropsType = {
     profile: ProfileType | null
     status: string
     updateStatus: (status: string) => any
+    isOwner:boolean
+    savePhoto:any
 }
 function ProfileInfo(props: ProfileInfoPropsType) {
+    const mainPhotoSelectOn=(e:ChangeEvent<HTMLInputElement>)=>{
+if (e.target.files && e.target.files.length){
+    props.savePhoto(e.target.files[0])
+}
+    }
     return (
         <div>
             {
@@ -21,9 +28,10 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                     </div>
                     <div className={s.descriptionBlock}>
                         <img src={props.profile.photos.large || userPhoto} className={s.avatarPhoto}/>
+                        {props.isOwner && <input type={"file"} onChange={mainPhotoSelectOn}/>}
                         <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
                         <div>Full name: {props.profile.fullName}</div>
-                        <div>contacts:{props.profile.contacts.github}</div>
+                        {/*<div>contacts:{!!props.profile.contacts.github ? props.profile.contacts.github:  }</div>*/}
                     </div>
                 </div>}
         </div>
