@@ -1,6 +1,5 @@
 import {Dispatch} from "redux";
 import {profileApi} from "../api/api";
-import profile from "../components/Profile/Profile";
 
 const ADD_POST = "profile/ADD-POST"
 const SET_USER_PROFILE = "profile/SET_USER_PROFILE"
@@ -41,16 +40,7 @@ export type ProfileInitialStateType = {
 }
 export type ProfileType = {
     aboutMe?: string
-    contacts?: {
-        facebook: null | string
-        website: null | string
-        vk: null | string
-        twitter: null | string
-        instagram: null | string
-        youtube: null | string
-        github: null | string
-        mainLink: null | string
-    },
+    contacts?: ContactsType
     lookingForAJob?: boolean
     lookingForAJobDescription?: string
     fullName?: string
@@ -65,6 +55,16 @@ export type PostType = {
     message: string
     likesCount: string
 }
+export type ContactsType={
+    facebook:  string
+    website:  string
+    vk:  string
+    twitter:  string
+    instagram:  string
+    youtube:  string
+    github:  string
+    mainLink:  string
+};
 export let initialState = {
     posts: [
         {id: 1, message: 'Hi how are you?', likesCount: "12"},
