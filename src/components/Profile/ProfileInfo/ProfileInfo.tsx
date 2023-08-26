@@ -1,9 +1,11 @@
-import React, {ChangeEvent, ChangeEventHandler, FC} from "react";
+import React, {ChangeEvent, FC, useState} from "react";
 import s from './ProfileInfo.module.css'
 import Preloader from "../../common/Preloader/Preloader";
-import {ContactsType, ProfileType} from "../../../redux/profile-reducer";
+import {ProfileType} from "../../../redux/profile-reducer";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from "../../../assets/images/free-user.png";
+import {ProfileDataEditForm} from "./ProfileDataEditForm";
+import {UserContacts} from "./UserContacts";
 
 
 type ProfileInfoPropsType = {
@@ -15,6 +17,11 @@ type ProfileInfoPropsType = {
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
+    const [editMode,setEditMode]=useState<boolean>(false)
+
+    const changeData =()=>{
+        setEditMode(true)
+    }
     const mainPhotoSelectOn = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
             props.savePhoto(e.target.files[0])
@@ -32,38 +39,37 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                         <img src={props.profile.photos.large || userPhoto} className={s.avatarPhoto}/>
                         {props.isOwner && <input type={"file"} onChange={mainPhotoSelectOn}/>}
                         <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
-                        <div>
-                            <b> Full name:</b> {props.profile.fullName}
-                        </div>
-                        <div>
-                            <b>Looking for a job: </b>{props.profile.lookingForAJob ? 'yes' : 'no'}
-                        </div>
-                        <div>
-                            <b> About me: </b> {props.profile.aboutMe}
-                        </div>
-                        <div>
-                            <b> Contacts: </b> <UserContacts contacts={props.profile.contacts}/>
-                        </div>
-
-
+                        {editMode ?
+                            <ProfileDataEditForm profile={props.profile}/> :
+                            <ProfileData profile={props.profile} isOwner={props.isOwner} changeData={changeData}/> }
                     </div>
                 </div>}
         </div>
     )
 }
 
-type ContactProps = {
-    contacts?: ContactsType
-
+type ProfileDataProps = {
+    profile: ProfileType
+    isOwner: boolean
+    changeData:()=>void
 }
-const UserContacts: FC<ContactProps> = ({contacts}) => {
-    const contactTitle = contacts && Object.entries(contacts)
-    return <div>
-        <b>{contactTitle?.map(title => <div>
-            <div>{title}</div>
-        </div>)}
-        </b>
-
-    </div>
+const ProfileData: FC<ProfileDataProps> = ({profile,isOwner,changeData}) => {
+    return (
+        <div>
+            {isOwner && <div> <button onClick={changeData}>editData</button></div>}
+            <div>
+                <b> Full name:</b> {profile.fullName}
+            </div>
+            <div>
+                <b>Looking for a job: </b>{profile.lookingForAJob ? 'yes' : 'no'}
+            </div>
+            <div>
+                <b> About me: </b> {profile.aboutMe}
+            </div>
+            <b> Contacts: </b> <UserContacts contacts={profile.contacts}/>
+        </div>
+    )
 }
+
+
 export default ProfileInfo;
