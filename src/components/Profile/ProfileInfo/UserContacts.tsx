@@ -9,10 +9,8 @@ type ContactProps = {
 export const UserContacts: FC<ContactProps> = ({contacts}) => {
     const contactTitle = contacts && Object.entries(contacts)
     return <div>
-        <b>{contactTitle?.map((title, index) => <div key={index}>
-            <div className={s.contact} >{title}</div>
+        {contactTitle?.map((title, index) => <div key={index}>
+            <div className={s.contact} >{`${title[0]}: ${title[1] ? title[1] :''}`}</div>
         </div>)}
-        </b>
-
     </div>
 }

@@ -57,7 +57,7 @@ type ProfileDataProps = {
 const ProfileData: FC<ProfileDataProps> = ({profile,isOwner,changeData}) => {
     return (
         <div>
-            {isOwner && <div> <button onClick={changeData}>editData</button></div>}
+            {isOwner && <div> <button onClick={changeData}>EditData</button></div>}
             <div>
                 <b> Full name:</b> {profile.fullName}
             </div>

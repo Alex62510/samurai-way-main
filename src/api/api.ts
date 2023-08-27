@@ -39,6 +39,7 @@ export const profileApi = {
         return instanse.put(`profile/photo/`, formData,{headers:{'Content-Type': 'multipart/form-data'}})
     },
     saveProfile(profile:any){
+
         return instanse.put(`profile`, profile)
     }
 }

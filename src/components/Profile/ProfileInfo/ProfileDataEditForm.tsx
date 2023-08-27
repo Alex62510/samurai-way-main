@@ -1,43 +1,54 @@
 import React, {FC} from "react";
 import {ProfileType} from "../../../redux/profile-reducer";
-import {UserContacts} from "./UserContacts";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input, TextArea} from "../../common/FormsControls/FormsControls";
+import s from "./ProfileInfo.module.css";
+import style from "../../common/FormsControls/FormsControls.module.css";
 
 type ProfileDataEditFormProps = {
     profile: ProfileType
-    saveProfile:any
-    setEditMode:any
+    saveProfile: any
+    setEditMode: any
 }
 type ProfileDataProps = {
     profile: ProfileType
 
 }
 
-export const ProfileDataEditForm: FC<ProfileDataEditFormProps> = ({profile,saveProfile,setEditMode}) => {
-const onSubmit=(formData:any)=>{
-    saveProfile(formData)
-    setEditMode(false)
-}
+export const ProfileDataEditForm: FC<ProfileDataEditFormProps> = ({profile, saveProfile, setEditMode}) => {
+    const onSubmit = (formData: any) => {
+        saveProfile(formData).then(()=>{
+            setEditMode(false)
+        })
+        console.log(formData)
+    }
+
     return (
         <div>
             <ProfileEditForm profile={profile} onSubmit={onSubmit} initialValues={profile}/>
-            <b> Contacts: </b> <UserContacts contacts={profile.contacts}/>
+
         </div>
     )
 }
-type HandleSubmitrops = {
+type HandleSubmitProps = {
     handleSubmit: React.FormEventHandler<HTMLFormElement> | undefined
     profile: ProfileType
 }
 
 
-const ProfileEdit = (props: HandleSubmitrops) => {
+const ProfileEdit: FC<HandleSubmitProps & InjectedFormProps> = ({handleSubmit, profile, error}) => {
+    const contactTitle = profile.contacts && Object.entries(profile.contacts)
+
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div>
-                <button onClick={() => {}}>save</button>
+                <button onClick={() => {
+                }}>save
+                </button>
             </div>
+            {error && <div className={style.formSummaryError}>
+                {error}
+            </div>}
             <div>
                 <b>Full name: </b>{
                 <Field component={Input} name="fullName" placeholder="fullName"/>}
@@ -48,13 +59,21 @@ const ProfileEdit = (props: HandleSubmitrops) => {
             </div>
             <div>
                 <b>My professional skills: </b>{
-                <Field component={TextArea} name="lookingForAJobDescription" placeholder="Looking for a job description" />}
+                <Field component={TextArea} name="lookingForAJobDescription"
+                       placeholder="Looking for a job description"/>}
             </div>
             <div>
                 <b>About me: </b>{
                 <Field component={TextArea} name="aboutMe" placeholder="AboutMe"/>}
             </div>
+            <b> Contacts: </b>{<div>
+            <b>{contactTitle?.map((title, index) => <div key={index}>
+                <div className={s.contact}>{`${title[0]}:`}</div>
+                <Field component={Input} name={'contacts.' + title[0]} placeholder={title[0]}/>
+            </div>)}
+            </b>
+        </div>}
         </form>
     )
 }
-const ProfileEditForm = reduxForm<any,ProfileDataProps>({form: 'ProfileEdit'})(ProfileEdit)
+const ProfileEditForm = reduxForm<any, any>({form: 'ProfileEdit'})(ProfileEdit)
