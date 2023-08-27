@@ -6,19 +6,22 @@ import {Input, TextArea} from "../../common/FormsControls/FormsControls";
 
 type ProfileDataEditFormProps = {
     profile: ProfileType
+    saveProfile:any
+    setEditMode:any
+}
+type ProfileDataProps = {
+    profile: ProfileType
+
 }
 
-
-export const ProfileDataEditForm: FC<ProfileDataEditFormProps> = ({profile}) => {
-const onSubmit=()=>{
-   alert('hi')
+export const ProfileDataEditForm: FC<ProfileDataEditFormProps> = ({profile,saveProfile,setEditMode}) => {
+const onSubmit=(formData:any)=>{
+    saveProfile(formData)
+    setEditMode(false)
 }
     return (
         <div>
-            <div>
-                <button onClick={() => {}}>save</button>
-            </div>
-            <ProfileEditForm profile={profile} onSubmit={onSubmit}/>
+            <ProfileEditForm profile={profile} onSubmit={onSubmit} initialValues={profile}/>
             <b> Contacts: </b> <UserContacts contacts={profile.contacts}/>
         </div>
     )
@@ -33,22 +36,25 @@ const ProfileEdit = (props: HandleSubmitrops) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
+                <button onClick={() => {}}>save</button>
+            </div>
+            <div>
                 <b>Full name: </b>{
-                <Field component={Input} name="NameEdit" placeholder="Name"/>}
+                <Field component={Input} name="fullName" placeholder="fullName"/>}
             </div>
             <div>
                 <b>Looking for a job: </b>{
-                <Field component={Input} name="LookingJob" placeholder="Look job" type={'checkbox'}/>}
+                <Field component={Input} name="LookingForAJob" placeholder="Look job" type={'checkbox'}/>}
             </div>
             <div>
                 <b>My professional skills: </b>{
-                <Field component={TextArea} name="My Professional Skills" placeholder="Looking for a job description" />}
+                <Field component={TextArea} name="lookingForAJobDescription" placeholder="Looking for a job description" />}
             </div>
             <div>
                 <b>About me: </b>{
-                <Field component={TextArea} name="AboutMe" placeholder="AboutMe"/>}
+                <Field component={TextArea} name="aboutMe" placeholder="AboutMe"/>}
             </div>
         </form>
     )
 }
-const ProfileEditForm = reduxForm<any,ProfileDataEditFormProps>({form: 'ProfileEdit'})(ProfileEdit)
+const ProfileEditForm = reduxForm<any,ProfileDataProps>({form: 'ProfileEdit'})(ProfileEdit)

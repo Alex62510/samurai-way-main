@@ -14,6 +14,7 @@ type ProfileInfoPropsType = {
     updateStatus: (status: string) => any
     isOwner: boolean
     savePhoto: any
+    saveProfile:any
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
@@ -40,7 +41,7 @@ function ProfileInfo(props: ProfileInfoPropsType) {
                         {props.isOwner && <input type={"file"} onChange={mainPhotoSelectOn}/>}
                         <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
                         {editMode ?
-                            <ProfileDataEditForm profile={props.profile}/> :
+                            <ProfileDataEditForm setEditMode={setEditMode} profile={props.profile} saveProfile={props.saveProfile}/> :
                             <ProfileData profile={props.profile} isOwner={props.isOwner} changeData={changeData}/> }
                     </div>
                 </div>}
@@ -62,6 +63,9 @@ const ProfileData: FC<ProfileDataProps> = ({profile,isOwner,changeData}) => {
             </div>
             <div>
                 <b>Looking for a job: </b>{profile.lookingForAJob ? 'yes' : 'no'}
+            </div>
+            <div>
+                <b>Professionals skills: </b>{profile.lookingForAJobDescription}
             </div>
             <div>
                 <b> About me: </b> {profile.aboutMe}

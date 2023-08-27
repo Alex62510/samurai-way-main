@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {profileApi} from "../api/api";
+import {getUsers} from "./users-selectors";
 
 const ADD_POST = "profile/ADD-POST"
 const SET_USER_PROFILE = "profile/SET_USER_PROFILE"
@@ -108,6 +109,14 @@ export const savePhotoTC = (file: string) => async (dispatch: Dispatch) => {
     const res = await profileApi.savePhoto(file)
     if (res.data.resultCode === 0) {
         dispatch(savePhotoSucsessAC(res.data.data.photos))
+    }
+}
+export const saveProfileTC = (profile: string) => async (dispatch: any,getState:any) => {
+    const userId=getState().auth.userID
+    debugger
+    const res = await profileApi.saveProfile(profile)
+    if (res.data.resultCode === 0) {
+        dispatch(ProfileGetTC(userId))
     }
 }
 export default profileReducer

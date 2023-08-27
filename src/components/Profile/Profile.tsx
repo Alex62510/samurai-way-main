@@ -11,6 +11,7 @@ export type ProfilepropsType = {
     updateStatus: (status: string) => any
     isOwner: boolean
     savePhoto:(file:any)=>any
+    saveProfile:any
 }
 
 const Profile = (props: ProfilepropsType) => {
@@ -22,6 +23,7 @@ const Profile = (props: ProfilepropsType) => {
                          updateStatus={props.updateStatus}
                          savePhoto={props.savePhoto}
                          isOwner={props.isOwner}
+                         saveProfile={props.saveProfile}
             />
             <SuperMyPostContainer/>
         </div>
