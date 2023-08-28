@@ -6,7 +6,7 @@ type ContactProps = {
     contacts?: ContactsType
 
 }
-export const UserContacts: FC<ContactProps> = ({contacts}) => {
+export const UserContacts: FC<ContactProps> = ({contacts }) => {
     const contactTitle = contacts && Object.entries(contacts)
     return <div>
         {contactTitle?.map((title, index) => <div key={index}>

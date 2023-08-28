@@ -48,12 +48,16 @@ export const authApi = {
     me() {
         return instanse.get(`auth/me`)
     },
-    login(email: string, password: string, rememberMe = false) {
-        return instanse.post(`auth/login`, {email, password, rememberMe})
+    login(email: string, password: string, rememberMe = false,captcha:any=null) {
+        return instanse.post(`auth/login`, {email, password, rememberMe,captcha})
     },
     logout() {
         return instanse.delete(`auth/login`,)
     },
 }
-
+export const securityApi = {
+    getCaptchaUrl() {
+        return instanse.get(`security/get-captcha-url`)
+    }
+}
 
