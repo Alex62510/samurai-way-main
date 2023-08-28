@@ -1,7 +1,7 @@
 import React, {lazy, Suspense} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, HashRouter, Route, RouteComponentProps} from "react-router-dom";
+import {BrowserRouter, HashRouter, Route, RouteComponentProps, Switch} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -14,8 +14,8 @@ import {initializedApp} from "./redux/app-reducer";
 import {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 
-const ProfileContainer=lazy(()=>import("./components/Profile/ProfileContainer"))
-const DialogsContainer=lazy(()=>import("./components/Dialogs/DialogsContainer"))
+const ProfileContainer = lazy(() => import("./components/Profile/ProfileContainer"))
+const DialogsContainer = lazy(() => import("./components/Dialogs/DialogsContainer"))
 
 export type MapAppPropsType = MapStateToPropsType & MapDispatchToProps & RouteComponentProps
 type MapDispatchToProps = {
@@ -24,32 +24,36 @@ type MapDispatchToProps = {
 type MapStateToPropsType = {
     initialized: boolean
 }
+
 class App extends React.Component<MapAppPropsType> {
     componentDidMount() {
         this.props.initializedApp()
-
     }
+
     render() {
         return (
-            <HashRouter>
+            <BrowserRouter>
                 <div className={'app-wrapper'}>
                     <HeaderContainer/>
                     <Navbar/>
                     <div className='app-wrapper-content'>
                         <Suspense fallback={<Preloader/>}>
-                            <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
-                            <Route path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
-                            <Route path='/Users' render={() => <UsersContainer/>}/>
-                            <Route path='/Login' component={Login}/>
-                            <Route path='/News' component={News}/>
-                            <Route path='/Music' component={Music}/>
-                            <Route path='/Settings' component={Settings}/>
+                            <Switch>
+                                <Route exact path='/' render={() => <ProfileContainer/>}/>
+                                <Route exact path='/Dialogs' render={() => <DialogsContainer/>}/>
+                                <Route exact path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
+                                <Route exact path='/Users' render={() => <UsersContainer/>}/>
+                                <Route exact path='/Login' component={Login}/>
+                                <Route exact path='/News' component={News}/>
+                                <Route exact path='/Music' component={Music}/>
+                                <Route exact path='/Settings' component={Settings}/>
+                                <Route exact path='/*' render={() => <h1>404 NOT FOUND</h1>}/>
+                            </Switch>
                         </Suspense>
                     </div>
                 </div>
-            </HashRouter>
+            </BrowserRouter>
         )
-
     }
 }
 
