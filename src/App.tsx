@@ -24,7 +24,6 @@ type MapDispatchToProps = {
 type MapStateToPropsType = {
     initialized: boolean
 }
-
 class App extends React.Component<MapAppPropsType> {
     componentDidMount() {
         this.props.initializedApp()
@@ -56,7 +55,6 @@ class App extends React.Component<MapAppPropsType> {
         )
     }
 }
-
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         initialized: state.app.initialized

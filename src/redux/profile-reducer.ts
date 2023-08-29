@@ -1,6 +1,5 @@
 import {Dispatch} from "redux";
 import {profileApi} from "../api/api";
-import {getUsers} from "./users-selectors";
 import {stopSubmit} from "redux-form";
 
 const ADD_POST = "profile/ADD-POST"
