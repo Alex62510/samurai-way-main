@@ -39,6 +39,7 @@ class App extends React.Component<MapAppPropsType> {
                         <Suspense fallback={<Preloader/>}>
                             <Switch>
                                 <Route exact path='/' render={() => <ProfileContainer/>}/>
+                                {this.props.initialized && <Route exact path='/samurai-way-main' render={() => <ProfileContainer/>}/>}
                                 <Route exact path='/Dialogs' render={() => <DialogsContainer/>}/>
                                 <Route exact path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
                                 <Route exact path='/Users' render={() => <UsersContainer/>}/>
@@ -46,7 +47,7 @@ class App extends React.Component<MapAppPropsType> {
                                 <Route exact path='/News' component={News}/>
                                 <Route exact path='/Music' component={Music}/>
                                 <Route exact path='/Settings' component={Settings}/>
-                                <Route exact path='/*' render={() => <h1>404 NOT FOUND</h1>}/>
+                                <Route exact path='/*' render={() => <h1>404 PAGE NOT FOUND</h1>}/>
                             </Switch>
                         </Suspense>
                     </div>
