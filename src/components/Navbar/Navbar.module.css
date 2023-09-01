@@ -6,6 +6,8 @@
 .item a {
     color: aliceblue;
     text-decoration: none;
+    filter:
+    drop-shadow(3px 3px 10px #390a96);
 }
 .item a.activeLink {
     color: gold;
