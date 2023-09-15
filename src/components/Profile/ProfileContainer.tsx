@@ -34,7 +34,6 @@ type MapDispatchToPropsType = {
     saveProfileTC:(value:any)=>any
 }
 type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OwnPropsType
-
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     refreshProfile(){
         let userId = Number(this.props.match.params.userId)
@@ -56,7 +55,6 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
        }
     }
     render() {
-
         return (
             <div className={s.content}>
                 <Profile
@@ -72,7 +70,6 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
         )
     }
 }
-
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
     return {
