@@ -34,11 +34,6 @@ export const setStatusAC = (status: string) => {
 export const savePhotoSucsessAC = (photos: any) => {
     return {type: SAVE_PHOTO, photos} as const
 }
-export type ProfileInitialStateType = {
-    posts: Array<PostType>
-    profile: ProfileType | null
-    status: string
-}
 export type ProfileType = {
     aboutMe?: string
     contacts?: ContactsType
@@ -66,14 +61,15 @@ export type ContactsType={
     github:  string
     mainLink:  string
 };
-export let initialState = {
+export const initialState = {
     posts: [
         {id: 1, message: 'Hi how are you?', likesCount: "12"},
         {id: 2, message: "It's my first post", likesCount: "44"},
-    ],
-    profile: null,
-    status: ""
+    ] as Array<PostType>,
+    profile: null as ProfileType | null,
+    status: "" as string
 }
+type ProfileInitialStateType =typeof initialState
 const profileReducer = (state: ProfileInitialStateType = initialState, action: ActionProfile): ProfileInitialStateType => {
     switch (action.type) {
         case ADD_POST:
