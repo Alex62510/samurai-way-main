@@ -47,14 +47,6 @@ export const isFetchingAC = (isFetching: boolean) => {
 export const followingInProgressAC = (isFetching: boolean, userId: number) => {
     return {type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId} as const
 }
-export type InitialUsersStateType = {
-    users: ApiUsersType
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-    followInProgress: number[]
-}
 export type ApiUsersType = Array<ApiUserType>
 export type ApiUserType = {
     name: string
@@ -67,14 +59,15 @@ export type ApiUserType = {
     status: string
     followed: boolean
 }
-const initialState: InitialUsersStateType = {
-    users: [],
-    pageSize: 50,
-    totalUsersCount: 0,
-    currentPage: 1,
-    isFetching: true,
-    followInProgress: []
+const initialState = {
+    users: [] as ApiUsersType,
+    pageSize: 50 as number,
+    totalUsersCount: 0 as number,
+    currentPage: 1 as number,
+    isFetching: true as boolean,
+    followInProgress: [] as Array<number>
 }
+export type InitialUsersStateType=typeof initialState
 
 const usersReducer = (state: InitialUsersStateType = initialState, action: ActionUsers): InitialUsersStateType => {
     switch (action.type) {
@@ -111,13 +104,11 @@ export const getUsersTC = (currentPage: number, pageSize: number) => async (disp
 }
 export const followUsersTC = (id: number) => async (dispatch: Dispatch) => {
     const apiMethod = userApi.followUsers.bind(userApi)
-    const actionCreator = unfollowAC
-    followUnfollow(dispatch, id, apiMethod, actionCreator)
+    followUnfollow(dispatch, id, apiMethod, unfollowAC)
 }
 export const unfollowUsersTC = (id: number) => async (dispatch: Dispatch) => {
     const apiMethod = userApi.unfollowUsers.bind(userApi)
-    const actionCreator = followAC
-    followUnfollow(dispatch, id, apiMethod, actionCreator)
+    followUnfollow(dispatch, id, apiMethod, followAC)
 }
 const followUnfollow = async (dispatch: Dispatch, id: number, apiMethod: any, actionCreator: any) => {
     dispatch(followingInProgressAC(true, id))
