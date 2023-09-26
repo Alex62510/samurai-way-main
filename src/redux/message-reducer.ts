@@ -8,12 +8,6 @@ export type ActionMessage = SendMessageCreaterType
 export const sendMessageCreater = (newMessageBody:string) => {
     return {type: SEND_MESSAGE,newMessageBody} as const
 }
-
-export type InitialMessageStateType = {
-    dialogs: Array<DialogsType>
-    messages: Array<MessagesType>
-
-}
 export type DialogsType = {
     id: number
     name: string
@@ -23,7 +17,7 @@ export type MessagesType = {
     message: string
 }
 
-let initialState:InitialMessageStateType = {
+const initialState = {
     dialogs: [
         {id: 1, name: 'Dimich'},
         {id: 2, name: 'Andrey'},
@@ -31,16 +25,16 @@ let initialState:InitialMessageStateType = {
         {id: 4, name: 'Sasha'},
         {id: 5, name: 'Victor'},
         {id: 6, name: 'Valera'}
-    ],
+    ] as Array<DialogsType>,
     messages: [
         {id: 1, message: 'Hi'},
         {id: 2, message: 'How are you'},
         {id: 3, message: 'Yo'},
         {id: 4, message: 'Yo'},
-    ],
+    ] as Array<MessagesType>,
 
 }
-
+export type InitialMessageStateType = typeof initialState
 const messageReducer = (state:InitialMessageStateType = initialState, action: ActionMessage):InitialMessageStateType => {
     switch (action.type) {
         case SEND_MESSAGE:
