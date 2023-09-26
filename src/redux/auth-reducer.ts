@@ -15,22 +15,15 @@ export type ActionAuth =
     | FormAction
     | GetCaptchaUrlACType
 
-export type InitialAuthStateType = {
-    id: number | null,
-    email: string | null,
-    login: string | null,
-    isAuth: boolean,
-    userID: number | null
-    captchaUrl: {} | null,
-}
-const initialState: InitialAuthStateType = {
-    id: 0,
-    email: '',
-    login: '',
+const initialState = {
+    id: null as number | null,
+    email: null as string | null,
+    login: null as string | null,
     isAuth: false,
-    userID: 0,
-    captchaUrl: null
+    userID: null as number | null,
+    captchaUrl: null as string | null,
 }
+export type InitialAuthStateType=typeof initialState
 const authReducer = (state: InitialAuthStateType = initialState, action: ActionAuth): InitialAuthStateType => {
     switch (action.type) {
         case SET_USER_DATA:
@@ -46,7 +39,7 @@ export const setAuthUserDataAC = (userID: number | null, email: string | null, l
         type: SET_USER_DATA, payload: {userID, email, login, isAuth}
     } as const
 }
-export const getCaptchaUrlSuccessAC = (captchaUrl: {}) => {
+export const getCaptchaUrlSuccessAC = (captchaUrl: string) => {
     return {
         type: GET_CAPTCHA_URL_SUCCESS, payload: {captchaUrl}
     } as const
@@ -58,7 +51,7 @@ export const authMeTC = (): AppThunk => async (dispatch) => {
         dispatch(setAuthUserDataAC(id, email, login, true))
     }
 }
-export const login = (email: string, password: string, rememberMe: boolean,captcha:any): AppThunk => async (dispatch) => {
+export const login = (email: string, password: string, rememberMe: boolean,captcha:string): AppThunk => async (dispatch) => {
     const res = await authApi.login(email, password, rememberMe,captcha)
     if (res.data.resultCode === 0) {
         dispatch(authMeTC())
