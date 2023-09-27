@@ -9,6 +9,8 @@
   "private": true,
   "homepage": "https://Alex62510.github.io/samurai-way-main",
   "dependencies": {
+    "@react-buddy/ide-toolbox": "^2.4.0",
+    "@react-buddy/palette-antd": "^4.18.1",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "12.0.0",
     "@testing-library/user-event": "13.2.1",
@@ -29,11 +31,11 @@
     "redux-form": "^8.3.10",
     "redux-thunk": "^2.4.2",
     "reselect": "^4.1.8",
+    "stylelint": "^15.10.3",
+    "stylelint-config-standard": "^34.0.0",
     "typescript": "4.4.2",
     "uuid": "8.3.2",
-    "web-vitals": "2.1.0",
-    "@react-buddy/ide-toolbox": "^2.4.0",
-    "@react-buddy/palette-antd": "^4.18.1"
+    "web-vitals": "2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,7 +43,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "lint": "stylelint \"**/*.css\" --fix"
   },
   "eslintConfig": {
     "extends": [

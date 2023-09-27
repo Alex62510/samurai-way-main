@@ -2,12 +2,10 @@
     display: grid;
     margin: 0 auto;
     width: 1200px;
-    grid-template-areas:
-"h h"
-    "n c";
-    grid-template-rows: 60px 1fr;
-    grid-template-columns: 2fr 10fr;
-    /*grid-gap: 10px;*/
+    grid-template:
+"h h" 60px "n c" 1fr / 2fr 10fr;
+
+    /* grid-gap: 10px; */
 }
 
 .app-wrapper-content {
