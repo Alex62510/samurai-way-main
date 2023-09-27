@@ -10,7 +10,7 @@ export type UsersPropsType = {
 }
 const Paginator: FC<UsersPropsType> = ({currentPage, onPageChanged, pageSize, totalItemsCount, portionSize = 10}) => {
     let pagesCount = Math.ceil(totalItemsCount / pageSize)
-    let pages = []
+    let pages:Array<number> = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
