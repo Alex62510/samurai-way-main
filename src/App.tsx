@@ -42,7 +42,7 @@ class App extends React.Component<MapAppPropsType> {
                                 {this.props.initialized && <Route exact path='/samurai-way-main' render={() => <ProfileContainer/>}/>}
                                 <Route exact path='/Dialogs' render={() => <DialogsContainer/>}/>
                                 <Route exact path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
-                                <Route exact path='/Users' render={() => <UsersContainer/>}/>
+                                <Route exact path='/Users' render={() => <UsersContainer pageTitle='Users'/>}/>
                                 <Route exact path='/Login' component={Login}/>
                                 <Route exact path='/News' component={News}/>
                                 <Route exact path='/Music' component={Music}/>

@@ -29,16 +29,18 @@ export type MapStateToPropsType = {
     followInProgress: number[]
 }
 export type MapDispatchToPropsType = {
-    follow: (userId: number) => any
-    unfollow: (userId: number) => any
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
     setCurrentPage: (currentPage: number) => void
     followingInProgress: (followingInProgress: boolean, id: number) => void
-    getUsers: (currentPage: number, pageSize: number) => any
+    getUsers: (currentPage: number, pageSize: number) => void
 }
+type OwnPropsType = {
+    pageTitle: string
+}
+type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType
 
-export type MapUserPropsType = MapStateToPropsType & MapDispatchToPropsType
-
-class UsersContainer extends React.Component<MapUserPropsType> {
+class UsersContainer extends React.Component<PropsType> {
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
@@ -50,9 +52,8 @@ class UsersContainer extends React.Component<MapUserPropsType> {
 
     render() {
         return <>
-            <div>
-                {this.props.isFetching ? <Preloader/> : null}
-            </div>
+            <h2>{this.props.pageTitle}</h2>
+            {this.props.isFetching ? <Preloader/> : null}
             <Users
                 totalItemsCount={this.props.totalItemsCount}
                 pageSize={this.props.pageSize}
@@ -77,7 +78,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         followInProgress: getFollowInProgress(state)
     }
 }
-export default connect(mapStateToProps, {
+export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
     follow: followUsersTC,
     unfollow: unfollowUsersTC,
     setCurrentPage: setCurrentPageAC,
