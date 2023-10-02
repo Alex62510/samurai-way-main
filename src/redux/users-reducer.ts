@@ -1,5 +1,7 @@
 import {Dispatch} from "redux";
 import {userApi} from "../api/api";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 const FOLLOW = "samurai/user/FOLLOW"
 const UNFOLLOW = "samurai/user/UNFOLLOW"
@@ -67,7 +69,7 @@ const initialState = {
     isFetching: true as boolean,
     followInProgress: [] as Array<number>
 }
-export type InitialUsersStateType=typeof initialState
+export type InitialUsersStateType = typeof initialState
 
 const usersReducer = (state: InitialUsersStateType = initialState, action: ActionUsers): InitialUsersStateType => {
     switch (action.type) {
@@ -93,7 +95,8 @@ const usersReducer = (state: InitialUsersStateType = initialState, action: Actio
             return state
     }
 }
-export const getUsersTC = (currentPage: number, pageSize: number) => async (dispatch: Dispatch) => {
+type ThinkType= ThunkAction<Promise<void>, AppStateType, unknown, ActionUsers>
+export const getUsersTC = (currentPage: number, pageSize: number): ThinkType => async (dispatch) => {
     dispatch(isFetchingAC(true))
     dispatch(setCurrentPageAC(currentPage))
     const res = await userApi.getUsers(currentPage, pageSize)
@@ -102,11 +105,11 @@ export const getUsersTC = (currentPage: number, pageSize: number) => async (disp
     dispatch(setUsersTotalCountAC(res.totalCount))
 
 }
-export const followUsersTC = (id: number) => async (dispatch: Dispatch) => {
+export const followUsersTC = (id: number):ThinkType => async (dispatch) => {
     const apiMethod = userApi.followUsers.bind(userApi)
     followUnfollow(dispatch, id, apiMethod, unfollowAC)
 }
-export const unfollowUsersTC = (id: number) => async (dispatch: Dispatch) => {
+export const unfollowUsersTC = (id: number):ThinkType => async (dispatch) => {
     const apiMethod = userApi.unfollowUsers.bind(userApi)
     followUnfollow(dispatch, id, apiMethod, followAC)
 }
