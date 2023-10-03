@@ -1,4 +1,4 @@
-import {authApi, securityApi} from "../api/api";
+import {authApi, ResultCode, securityApi} from "../api/api";
 import {AppThunk} from "./redux-store";
 import {FormAction, stopSubmit} from "redux-form";
 
@@ -46,17 +46,17 @@ export const getCaptchaUrlSuccessAC = (captchaUrl: string) => {
 }
 export const authMeTC = (): AppThunk => async (dispatch) => {
     const res = await authApi.me()
-    if (res.data.resultCode === 0) {
-        let {id, email, login} = res.data.data
+    if (res.resultCode === ResultCode.Success) {
+        let {id, email, login} = res.data
         dispatch(setAuthUserDataAC(id, email, login, true))
     }
 }
 export const login = (email: string, password: string, rememberMe: boolean,captcha:string): AppThunk => async (dispatch) => {
     const res = await authApi.login(email, password, rememberMe,captcha)
-    if (res.data.resultCode === 0) {
+    if (res.data.resultCode === ResultCode.Success) {
         dispatch(authMeTC())
     } else {
-        if(res.data.resultCode===10){
+        if(res.data.resultCode===ResultCode.CaptchaIsRequired){
             dispatch(getCaptchaUrl())
         }
         let message = res.data.messages.length > 0 ? res.data.messages[0] : "Some error"
@@ -70,7 +70,7 @@ export const getCaptchaUrl = (): AppThunk => async (dispatch) => {
 }
 export const logout = (): AppThunk => async (dispatch) => {
     const res = await authApi.logout()
-    if (res.data.resultCode === 0) {
+    if (res.data.resultCode === ResultCode.Success) {
         dispatch(setAuthUserDataAC(null, null, null, false))
     }
 }
