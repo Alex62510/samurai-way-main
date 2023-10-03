@@ -53,13 +53,13 @@ export const authMeTC = (): AppThunk => async (dispatch) => {
 }
 export const login = (email: string, password: string, rememberMe: boolean,captcha:string): AppThunk => async (dispatch) => {
     const res = await authApi.login(email, password, rememberMe,captcha)
-    if (res.data.resultCode === ResultCode.Success) {
+    if (res.resultCode === ResultCode.Success) {
         dispatch(authMeTC())
     } else {
-        if(res.data.resultCode===ResultCode.CaptchaIsRequired){
+        if(res.resultCode===ResultCode.CaptchaIsRequired){
             dispatch(getCaptchaUrl())
         }
-        let message = res.data.messages.length > 0 ? res.data.messages[0] : "Some error"
+        let message = res.messages.length > 0 ? res.messages[0] : "Some error"
         dispatch(stopSubmit("login", {_error: message}))
     }
 }
