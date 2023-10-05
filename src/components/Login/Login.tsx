@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../common/FormsControls/FormsControls";
 import {maxLengthCreator, required} from "../../utils/validators/validators";
@@ -16,7 +16,7 @@ export type FormDataType = {
     captcha: string
 }
 type CaptchaType = {
-    captchaUrl: any
+    captchaUrl: string
 }
 const maxLength10 = maxLengthCreator(20)
 const LoginForm: React.FC<InjectedFormProps<FormDataType>&CaptchaType> = ({handleSubmit, error, captchaUrl }) => {
