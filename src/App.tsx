@@ -19,7 +19,7 @@ const DialogsContainer = lazy(() => import("./components/Dialogs/DialogsContaine
 
 export type MapAppPropsType = MapStateToPropsType & MapDispatchToProps & RouteComponentProps
 type MapDispatchToProps = {
-    initializedApp: () => any
+    initializedApp: () => void
 }
 type MapStateToPropsType = {
     initialized: boolean
