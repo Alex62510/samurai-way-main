@@ -3,7 +3,7 @@ import threeDots from "../../../assets/images/threeDots.svg";
 
 const Preloader =()=> {
         return (
-            <div>
+            <div className={'preloder'}>
                 <img src={threeDots}/>
                 </div>
         );
