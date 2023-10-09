@@ -61,7 +61,7 @@ export type ApiUserType = {
     status: string
     followed: boolean
 }
-const initialState = {
+export const initialState = {
     users: [] as ApiUsersType,
     pageSize: 50 as number,
     totalUsersCount: 0 as number,
