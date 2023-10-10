@@ -4,6 +4,7 @@ import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input, TextArea} from "../../common/FormsControls/FormsControls";
 import s from "./ProfileInfo.module.css";
 import style from "../../common/FormsControls/FormsControls.module.css";
+import {sendMetrick} from "../../../utils/metric/metric";
 
 type ProfileDataEditFormProps = {
     profile: ProfileType
@@ -42,7 +43,7 @@ const ProfileEdit: FC<HandleSubmitProps & InjectedFormProps> = ({handleSubmit, p
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <button onClick={() => {
+                <button onClick={() => {sendMetrick('reachGoal','EditButtonClick')
                 }}>save
                 </button>
             </div>
