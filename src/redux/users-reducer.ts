@@ -55,8 +55,8 @@ export type ApiUserType = {
     id: number
     uniqueUrlName: string
     photos: {
-        small: string
-        large: string
+        small: string|null
+        large: string|null
     },
     status: string
     followed: boolean
