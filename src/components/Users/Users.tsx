@@ -41,8 +41,11 @@ const userSearchFormValidate=(value:any)=>{
     const errors={}
     return errors
 }
+type UsersSearchFormObjectType={
+    term:string
+}
 const UsersSearchForm=()=>{
-    const submit= (values, { setSubmitting }) => {
+    const submit= (values:UsersSearchFormObjectType, { setSubmitting }:{setSubmitting:(isSubmitting:boolean)=>void}) => {
             setTimeout(() => {
                 alert(JSON.stringify(values, null, 2));
                 setSubmitting(false);
