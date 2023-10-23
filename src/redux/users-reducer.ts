@@ -10,11 +10,13 @@ const SET_CURRENT_PAGE = "samurai/user/SET_CURRENT_PAGE"
 const SET_USERS_TOTAL_COUNT = "samurai/user/SET_USERS_TOTAL_COUNT"
 const TOGGLE_IS_FETCHING = "samurai/user/TOGGLE_IS_FETCHING"
 const TOGGLE_IS_FOLLOWING_PROGRESS = "samurai/user/TOGGLE_IS_FOLLOWING_PROGRESS"
+const SET_FILTER="samurai/user/SET_FILTER"
 
 type FollowACType = ReturnType<typeof followAC>
 type UnfollowACType = ReturnType<typeof unfollowAC>
 type SetUsersACType = ReturnType<typeof setUsersAC>
 type SetCurrentPageType = ReturnType<typeof setCurrentPageAC>
+type SetFilterType = ReturnType<typeof setFilterAC>
 type setUsersTotalCountType = ReturnType<typeof setUsersTotalCountAC>
 type IsFetchingType = ReturnType<typeof isFetchingAC>
 type FollowingInProgressACType = ReturnType<typeof followingInProgressAC>
@@ -27,6 +29,7 @@ export type ActionUsers =
     | SetCurrentPageType
     | setUsersTotalCountType
     | FollowingInProgressACType
+|SetFilterType
 
 export const followAC = (userId: number) => {
     return {type: FOLLOW, userId} as const
@@ -39,6 +42,9 @@ export const setUsersAC = (users: ApiUsersType) => {
 }
 export const setCurrentPageAC = (currentPage: number) => {
     return {type: SET_CURRENT_PAGE, currentPage} as const
+}
+export const setFilterAC = (term: string) => {
+    return {type: SET_FILTER, payload:{term}} as const
 }
 export const setUsersTotalCountAC = (totalCount: number) => {
     return {type: SET_USERS_TOTAL_COUNT, totalCount} as const
@@ -67,7 +73,10 @@ export const initialState = {
     totalUsersCount: 0 as number,
     currentPage: 1 as number,
     isFetching: true as boolean,
-    followInProgress: [] as Array<number>
+    followInProgress: [] as Array<number>,
+    filter:{
+        term:''
+    }
 }
 export type InitialUsersStateType = typeof initialState
 
@@ -91,12 +100,14 @@ const usersReducer = (state: InitialUsersStateType = initialState, action: Actio
                     ? [...state.followInProgress, action.userId]
                     : state.followInProgress.filter(id => id !== action.userId)
             }
+        case SET_FILTER:
+            return {...state, filter:action.payload}
         default:
             return state
     }
 }
 type ThinkType= ThunkAction<Promise<void>, AppStateType, unknown, ActionUsers>
-export const getUsersTC = (currentPage: number, pageSize: number): ThinkType => async (dispatch) => {
+export const getUsersTC = (currentPage: number, pageSize: number,term:string): ThinkType => async (dispatch) => {
     dispatch(isFetchingAC(true))
     dispatch(setCurrentPageAC(currentPage))
     const res = await userApi.getUsers(currentPage, pageSize)
