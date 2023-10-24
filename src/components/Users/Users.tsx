@@ -13,7 +13,6 @@ export type UsersPropsType = {
     follow: (userId: number) => void
     onPageChanged: (pageNumber: number) => void
     followInProgress: number[]
-
 }
 
 const Users:FC<UsersPropsType> = ({usersPage,onPageChanged,pageSize,totalItemsCount,currentPage,followInProgress,follow,unfollow, ...props}) => {
