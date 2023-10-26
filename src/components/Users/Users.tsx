@@ -12,6 +12,7 @@ export type UsersPropsType = {
     unfollow: (userId: number) => void
     follow: (userId: number) => void
     onPageChanged: (pageNumber: number) => void
+    onFilterChanged: (filter: FilterType) => void
     followInProgress: number[]
 }
 
@@ -19,7 +20,7 @@ const Users:FC<UsersPropsType> = ({usersPage,onPageChanged,pageSize,totalItemsCo
     const portionSize=10
     return (
         <div>
-            <UsersSearchForm/>
+            <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
             <Paginator
                 portionSize={portionSize}
                 onPageChanged={onPageChanged}
@@ -40,12 +41,12 @@ const userSearchFormValidate=(value:any)=>{
     const errors={}
     return errors
 }
-
-const UsersSearchForm=()=>{
+type Propstype={
+    onFilterChanged:(filter:FilterType)=>void
+}
+const UsersSearchForm:FC<Propstype>=({onFilterChanged})=>{
     const submit= (values:FilterType, { setSubmitting }:{setSubmitting:(isSubmitting:boolean)=>void}) => {
-            setTimeout(() => {
-                setSubmitting(false);
-            }, 400);
+        onFilterChanged(values)
     }
 return <div>
     <Formik
