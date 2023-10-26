@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {ApiUsersType} from "../../redux/users-reducer";
+import {ApiUsersType, FilterType} from "../../redux/users-reducer";
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
 import {Formik,Form, Field} from "formik";
@@ -40,11 +40,9 @@ const userSearchFormValidate=(value:any)=>{
     const errors={}
     return errors
 }
-type UsersSearchFormObjectType={
-    term:string
-}
+
 const UsersSearchForm=()=>{
-    const submit= (values:UsersSearchFormObjectType, { setSubmitting }:{setSubmitting:(isSubmitting:boolean)=>void}) => {
+    const submit= (values:FilterType, { setSubmitting }:{setSubmitting:(isSubmitting:boolean)=>void}) => {
             setTimeout(() => {
                 setSubmitting(false);
             }, 400);

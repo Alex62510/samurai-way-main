@@ -79,6 +79,7 @@ export const initialState = {
     }
 }
 export type InitialUsersStateType = typeof initialState
+export type FilterType = typeof initialState.filter
 
 const usersReducer = (state: InitialUsersStateType = initialState, action: ActionUsers): InitialUsersStateType => {
     switch (action.type) {

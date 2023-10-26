@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {
-    ApiUsersType,
+    ApiUsersType, FilterType,
     followingInProgressAC,
     followUsersTC,
     getUsersTC,
@@ -33,7 +33,7 @@ export type MapDispatchToPropsType = {
     unfollow: (userId: number) => void
     setCurrentPage: (currentPage: number) => void
     followingInProgress: (followingInProgress: boolean, id: number) => void
-    getUsers: (currentPage: number, pageSize: number,term:string) => void
+    getUsers: (currentPage: number, pageSize: number, term: string) => void
 }
 type OwnPropsType = {
     pageTitle: string
@@ -42,12 +42,16 @@ type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType
 
 class UsersContainer extends React.Component<PropsType> {
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize,'')
+        this.props.getUsers(this.props.currentPage, this.props.pageSize, '')
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.setCurrentPage(pageNumber)
-        this.props.getUsers(pageNumber, this.props.pageSize,'')
+        const {pageSize} = this.props
+        this.props.getUsers(pageNumber, pageSize, '')
+    }
+    onFilterChanged = (filter: FilterType) => {
+        const {currentPage, pageSize} = this.props
+        this.props.getUsers(currentPage, pageSize, filter.term)
     }
 
     render() {
