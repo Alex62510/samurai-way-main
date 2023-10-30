@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {ApiUsersType, FilterType} from "../../redux/users-reducer";
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
-import {Formik, Form, Field} from "formik";
+import {UsersSearchForm} from "./usersSearchForm/UsersSearchForm";
 
 export type UsersPropsType = {
     totalItemsCount: number
@@ -47,34 +47,5 @@ const Users: FC<UsersPropsType> = ({
         </div>
     );
 }
-const userSearchFormValidate = (value: any) => {
-    const errors = {}
 
-    return errors
-}
-type Propstype = {
-    onFilterChanged: (filter: FilterType) => void
-}
-const UsersSearchForm: FC<Propstype> = ({onFilterChanged}) => {
-    const submit = (values: FilterType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
-        onFilterChanged(values)
-    }
-
-    return <div>
-        <Formik
-            initialValues={{term: ''}}
-            validate={userSearchFormValidate}
-            onSubmit={submit}
-        >
-            {({isSubmitting}) => (
-                <Form>
-                    <Field type="text" name="term"/>
-                    <button type="submit" disabled={isSubmitting}>
-                        Find
-                    </button>
-                </Form>
-            )}
-        </Formik>
-    </div>
-}
 export default Users

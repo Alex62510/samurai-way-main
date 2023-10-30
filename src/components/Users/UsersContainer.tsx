@@ -17,7 +17,7 @@ import {
     getIsFetching,
     getPageSize,
     getTotalUsersCount,
-    getUsers
+    getUsers, getUsersFilter
 } from "../../redux/users-selectors";
 
 export type MapStateToPropsType = {
@@ -27,6 +27,7 @@ export type MapStateToPropsType = {
     currentPage: number
     isFetching: boolean
     followInProgress: number[]
+    filter:FilterType
 }
 export type MapDispatchToPropsType = {
     follow: (userId: number) => void
@@ -46,12 +47,12 @@ class UsersContainer extends React.Component<PropsType> {
     }
 
     onPageChanged = (pageNumber: number) => {
-        const {pageSize} = this.props
-        this.props.getUsers(pageNumber, pageSize, '')
+        const {pageSize,filter} = this.props
+        this.props.getUsers(pageNumber, pageSize, filter.term)
     }
     onFilterChanged = (filter: FilterType) => {
-        const {currentPage, pageSize} = this.props
-        this.props.getUsers(currentPage, pageSize, filter.term)
+        const { pageSize} = this.props
+        this.props.getUsers(1, pageSize, filter.term)
     }
 
     render() {
@@ -80,7 +81,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         totalItemsCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
-        followInProgress: getFollowInProgress(state)
+        followInProgress: getFollowInProgress(state),
+        filter:getUsersFilter(state)
     }
 }
 export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
