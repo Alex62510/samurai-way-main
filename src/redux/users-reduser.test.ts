@@ -36,7 +36,7 @@ let state: InitialUsersStateType
         currentPage: 1,
         isFetching: false,
         followInProgress: [],
-            filter: {term:''}
+            filter: {term:'',friend: null}
     }})
 
 test("follow success", () => {
