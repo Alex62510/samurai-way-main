@@ -43,8 +43,8 @@ export const setUsersAC = (users: ApiUsersType) => {
 export const setCurrentPageAC = (currentPage: number) => {
     return {type: SET_CURRENT_PAGE, currentPage} as const
 }
-export const setFilterAC = (term: string) => {
-    return {type: SET_FILTER, payload: {term}} as const
+export const setFilterAC = (filter: FilterType) => {
+    return {type: SET_FILTER, payload: filter} as const
 }
 export const setUsersTotalCountAC = (totalCount: number) => {
     return {type: SET_USERS_TOTAL_COUNT, totalCount} as const
@@ -75,7 +75,8 @@ export const initialState = {
     isFetching: true as boolean,
     followInProgress: [] as Array<number>,
     filter: {
-        term: ''
+        term: '',
+        friend: null as null | boolean
     }
 }
 export type InitialUsersStateType = typeof initialState
@@ -108,12 +109,12 @@ const usersReducer = (state: InitialUsersStateType = initialState, action: Actio
     }
 }
 type ThinkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionUsers>
-export const getUsersTC = (currentPage: number, pageSize: number, term: string): ThinkType => async (dispatch) => {
+export const getUsersTC = (currentPage: number, pageSize: number, filter: FilterType): ThinkType => async (dispatch) => {
     dispatch(isFetchingAC(true))
     dispatch(setCurrentPageAC(currentPage))
-    dispatch(setFilterAC(term))
+    dispatch(setFilterAC(filter))
 
-    const res = await userApi.getUsers(currentPage, pageSize,term)
+    const res = await userApi.getUsers(currentPage, pageSize, filter.term, filter.friend)
     dispatch(isFetchingAC(false))
     dispatch(setUsersAC(res.items))
     dispatch(setUsersTotalCountAC(res.totalCount))
