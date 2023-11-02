@@ -3,31 +3,36 @@ import {ApiUsersType, FilterType} from "../../redux/users-reducer";
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
 import {UsersSearchForm} from "./usersSearchForm/UsersSearchForm";
+import {useSelector} from "react-redux";
+import {getCurrentPage, getFollowInProgress, getPageSize, getTotalUsersCount} from "../../redux/users-selectors";
 
 export type UsersPropsType = {
-    totalItemsCount: number
-    pageSize: number
+    // totalItemsCount: number
+    // pageSize: number
     usersPage: ApiUsersType
-    currentPage: number
+    // currentPage: number
     unfollow: (userId: number) => void
     follow: (userId: number) => void
     onPageChanged: (pageNumber: number) => void
     onFilterChanged: (filter: FilterType) => void
-    followInProgress: number[]
+    // followInProgress: number[]
 }
 
 const Users: FC<UsersPropsType> = ({
                                        usersPage,
                                        onPageChanged,
-                                       pageSize,
-                                       totalItemsCount,
-                                       currentPage,
-                                       followInProgress,
                                        follow,
                                        unfollow,
                                        ...props
                                    }) => {
     const portionSize = 10
+
+    const totalItemsCount = useSelector(getTotalUsersCount)
+    const currentPage = useSelector(getCurrentPage)
+    const pageSize = useSelector(getPageSize)
+    const followInProgress = useSelector(getFollowInProgress)
+
+
     return (
         <div>
             <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
