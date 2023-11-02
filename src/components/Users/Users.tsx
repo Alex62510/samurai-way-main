@@ -1,37 +1,24 @@
-import React, {FC} from 'react';
-import {ApiUsersType, FilterType, getUsersTC} from "../../redux/users-reducer";
+import React, {FC, useEffect} from 'react';
+import {FilterType, followUsersTC, getUsersTC, unfollowUsersTC} from "../../redux/users-reducer";
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
 import {UsersSearchForm} from "./usersSearchForm/UsersSearchForm";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {
     getCurrentPage,
     getFollowInProgress,
     getPageSize,
-    getTotalUsersCount, getUsers,
+    getTotalUsersCount,
+    getUsers,
     getUsersFilter
 } from "../../redux/users-selectors";
 import {useAppDispatch} from "../../redux/redux-store";
 
-export type UsersPropsType = {
-    // totalItemsCount: number
-    // pageSize: number
-    // usersPage: ApiUsersType
-    // currentPage: number
-    unfollow: (userId: number) => void
-    follow: (userId: number) => void
-    // onPageChanged: (pageNumber: number) => void
-    // onFilterChanged: (filter: FilterType) => void
-    // followInProgress: number[]
+type PropsType = {
 }
 
-const Users: FC<UsersPropsType> = ({
-                                       // usersPage,
-                                       // onPageChanged,
-                                       follow,
-                                       unfollow,
-                                       ...props
-                                   }) => {
+export const Users: FC<PropsType> = (props) => {
+
     const portionSize = 10
 
     const usersPage = useSelector(getUsers)
@@ -49,6 +36,16 @@ const Users: FC<UsersPropsType> = ({
     const onPageChanged = (pageNumber: number) => {
         dispatch(getUsersTC(pageNumber, pageSize, filter))
     }
+    const follow = (userId: number) => {
+        dispatch(followUsersTC(userId))
+    }
+    const unfollow = (userId: number) => {
+        dispatch(unfollowUsersTC(userId))
+    }
+
+    useEffect(() => {
+        dispatch(getUsersTC(currentPage, pageSize, filter))
+    }, []);
 
     return (
         <div>
@@ -70,4 +67,3 @@ const Users: FC<UsersPropsType> = ({
     );
 }
 
-export default Users
