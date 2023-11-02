@@ -1,11 +1,11 @@
- import React from 'react';
+import React, {FC} from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../common/FormsControls/FormsControls";
 import {maxLengthCreator, required} from "../../utils/validators/validators";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {login, logout} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
-import {AppStateType} from "../../redux/redux-store";
+import {AppStateType, useAppDispatch} from "../../redux/redux-store";
 import style from './../common/FormsControls/FormsControls.module.css'
 
 
@@ -19,7 +19,7 @@ type CaptchaType = {
     captchaUrl: string
 }
 const maxLength10 = maxLengthCreator(20)
-const LoginForm: React.FC<InjectedFormProps<FormDataType>&CaptchaType> = ({handleSubmit, error, captchaUrl }) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType> & CaptchaType> = ({handleSubmit, error, captchaUrl}) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
@@ -33,7 +33,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>&CaptchaType> = ({handl
                 <Field component={Input} name={"rememberMe"} type={"Checkbox"}/>remember me
             </div>
             {captchaUrl && <img src={captchaUrl}/>}
-            {captchaUrl && <Field component={Input} name={'captcha'} placeholder={'Antibot symbols'} />}
+            {captchaUrl && <Field component={Input} name={'captcha'} placeholder={'Antibot symbols'}/>}
             {error && <div className={style.formSummaryError}>
                 {error}
             </div>}
@@ -43,32 +43,29 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>&CaptchaType> = ({handl
         </form>
     );
 };
-const LoginReduxForm = reduxForm<FormDataType&CaptchaType,any>({form: "login"})(LoginForm)
+const LoginReduxForm = reduxForm<FormDataType & CaptchaType, any>({form: "login"})(LoginForm)
 
-type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType
-type MapStateToPropsType=ReturnType<typeof mapStateToProps>
-type MapDispatchToPropsType=ReturnType<typeof mapDispatchToProps>
-const Login = (props: LoginPropsType) => {
+type PropsType = {}
+
+
+export const LoginPage:FC<PropsType> = (props) => {
+
+    const captchaUrl = useSelector<AppStateType>(state => state.auth.captchaUrl)
+    const isAuth = useSelector<AppStateType>(state => state.auth.isAuth)
+    const dispatch = useAppDispatch()
+
     const onSubmit = (formData: FormDataType) => {
-        props.login(formData.email, formData.password, formData.rememberMe,formData.captcha)
+        dispatch(login(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
-    if (props.isAuth) {
+    if (isAuth) {
         return <Redirect to="/Profile"/>
     }
     return <div>
         <h1>
             Login
         </h1>
-        <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
+        <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl}/>
     </div>
 };
-const mapStateToProps = (state: AppStateType) => {
-    return {
-        isAuth: state.auth.isAuth,
-        captchaUrl: state.auth.captchaUrl
-    } as const
-}
-const mapDispatchToProps=()=>{
-    return {login, logout}as const
-}
-export default connect(mapStateToProps, {login, logout})(Login);
+
+

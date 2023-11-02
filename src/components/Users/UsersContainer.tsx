@@ -8,7 +8,7 @@ import {Users} from "./Users";
 type PropsType = {
     pageTitle: string
 }
-const UsersPage: FC<PropsType> = ({pageTitle}) => {
+export const UsersPage: FC<PropsType> = ({pageTitle}) => {
 
     const isFetching = useSelector(getIsFetching)
 
@@ -19,4 +19,3 @@ const UsersPage: FC<PropsType> = ({pageTitle}) => {
     </>
 }
 
-export default UsersPage
