@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import s from './Profile.module.css'
 import Profile from "./Profile";
 import {connect} from "react-redux";
@@ -34,6 +34,31 @@ type MapDispatchToPropsType = {
     saveProfileTC:(value:any)=>any
 }
 type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OwnPropsType
+
+
+
+
+
+
+type PropsType={}
+const ProfilePage:FC<PropsType>=(props)=>{
+
+
+    return (
+        <div className={s.content}>
+            <Profile
+                {...this.props}
+                isOwner={!this.props.match.params.userId}
+                profile={this.props.profile}
+                // status={this.props.status}
+                updateStatus={this.props.UpdateStatusTC}
+                savePhoto={this.props.savePhotoTC}
+                saveProfile={this.props.saveProfileTC}
+            />
+        </div>
+    )
+}
+
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     refreshProfile(){
         let userId = Number(this.props.match.params.userId)
@@ -61,7 +86,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
                     {...this.props}
                     isOwner={!this.props.match.params.userId}
                     profile={this.props.profile}
-                    status={this.props.status}
+                    // status={this.props.status}
                     updateStatus={this.props.UpdateStatusTC}
                     savePhoto={this.props.savePhotoTC}
                     saveProfile={this.props.saveProfileTC}
