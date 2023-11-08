@@ -26,7 +26,6 @@ type QueryParamsType ={
 export const Users: FC<PropsType> = (props) => {
 
     const portionSize = 10
-
     const usersPage = useSelector(getUsers)
     const totalItemsCount = useSelector(getTotalUsersCount)
     const currentPage = useSelector(getCurrentPage)
@@ -74,6 +73,7 @@ export const Users: FC<PropsType> = (props) => {
         if(!!filter.term){query.term=filter.term}
         if(filter.friend!==null){query.friend=String(filter.friend)}
         if(currentPage!==1){query.page=String(currentPage)}
+
         history.push({
             pathname: '/users',
             search: queryString.stringify(query)
