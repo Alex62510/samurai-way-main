@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React from "react";
 import s from './Profile.module.css'
 import Profile from "./Profile";
 import {connect} from "react-redux";
