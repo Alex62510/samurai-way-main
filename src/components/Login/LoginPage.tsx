@@ -64,6 +64,8 @@ export const LoginPage:FC<PropsType> = (props) => {
         <h1>
             Login
         </h1>
+        <div>Email: free@samuraijs.com</div>
+        <div>Password: free</div>
         <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl}/>
     </div>
 };

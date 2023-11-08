@@ -41,23 +41,23 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & OwnPropsT
 
 
 type PropsType={}
-const ProfilePage:FC<PropsType>=(props)=>{
-
-
-    return (
-        <div className={s.content}>
-            <Profile
-                {...this.props}
-                isOwner={!this.props.match.params.userId}
-                profile={this.props.profile}
-                // status={this.props.status}
-                updateStatus={this.props.UpdateStatusTC}
-                savePhoto={this.props.savePhotoTC}
-                saveProfile={this.props.saveProfileTC}
-            />
-        </div>
-    )
-}
+// const ProfilePage:FC<PropsType>=(props)=>{
+//
+//
+//     return (
+//         <div className={s.content}>
+//             <Profile
+//                 {...this.props}
+//                 isOwner={!this.props.match.params.userId}
+//                 profile={this.props.profile}
+//                 // status={this.props.status}
+//                 updateStatus={this.props.UpdateStatusTC}
+//                 savePhoto={this.props.savePhotoTC}
+//                 saveProfile={this.props.saveProfileTC}
+//             />
+//         </div>
+//     )
+// }
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     refreshProfile(){
