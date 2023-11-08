@@ -15,11 +15,14 @@ import {
 import {useAppDispatch} from "../../redux/redux-store";
 
 import {useHistory} from "react-router-dom";
-import * as querystring from "querystring";
 import * as queryString from "querystring";
 
 type PropsType = {}
-
+type QueryParamsType ={
+    term?: string,
+    page?: string,
+    friend?: string
+}
 export const Users: FC<PropsType> = (props) => {
 
     const portionSize = 10
@@ -47,11 +50,7 @@ export const Users: FC<PropsType> = (props) => {
     }
 
     useEffect(() => {
-        const parsed = queryString.parse(history.location.search.substr(1)) as {
-            term: string,
-            page: string,
-            friend: string
-        }
+        const parsed = queryString.parse(history.location.search.substr(1)) as QueryParamsType
         let actualPage = currentPage
         let actualFilter = filter
 
@@ -71,9 +70,13 @@ export const Users: FC<PropsType> = (props) => {
     }, []);
 
     useEffect(() => {
+        const query:QueryParamsType={}
+        if(!!filter.term){query.term=filter.term}
+        if(filter.friend!==null){query.friend=String(filter.friend)}
+        if(currentPage!==1){query.page=String(currentPage)}
         history.push({
             pathname: '/users',
-            search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`
+            search: queryString.stringify(query)
         })
     }, [filter, currentPage]);
 
