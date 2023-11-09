@@ -1,7 +1,7 @@
 import React, {lazy, Suspense} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, NavLink, Route, RouteComponentProps, Switch, useHistory} from "react-router-dom";
+import {BrowserRouter, Link, NavLink, Route, RouteComponentProps, Switch, useHistory} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -50,9 +50,9 @@ function getItem(
 }
 
 const items2: MenuItem[] = [
-    getItem(<NavLink to='/Profile' >Profile page</NavLink>, '1',<UserOutlined /> ),
-    getItem(<NavLink to='/Dialogs' >Messages</NavLink>, '2', <FileOutlined />),
-    getItem(<NavLink to='/Users' >Developers</NavLink>, '3', <TeamOutlined />),
+    getItem(<Link to='/Profile' >Profile page</Link>, '1',<UserOutlined /> ),
+    getItem(<Link to='/Dialogs' >Messages</Link>, '2', <FileOutlined />),
+    getItem(<Link to='/Developers' >Developers</Link>, '3', <TeamOutlined />),
     getItem('User', 'sub1', <DesktopOutlined />, [
         getItem('Tom', '4'),
         getItem('Alex', '5'),
@@ -67,11 +67,6 @@ type MapDispatchToProps = {
 type MapStateToPropsType = {
     initialized: boolean
 }
-
-const navigateLink = (label:string) => {
-    <NavLink to={`/${label}`} activeClassName={s.activeLink}>label</NavLink>
-}
-
 
 
 class App extends React.Component<MapAppPropsType> {
@@ -97,11 +92,11 @@ class App extends React.Component<MapAppPropsType> {
                             <Sider className="site-layout-background" width={200}>
                                 <Menu
                                     mode="inline"
-                                    defaultSelectedKeys={['1']}
+
+                                    // defaultSelectedKeys={[]}
                                     defaultOpenKeys={['sub1']}
                                     style={{ height: '100%' }}
                                     items={items2}
-                                    // onClick={navigateLink(items2.map(t=>t))}
                                 />
                             </Sider>
                             <Content style={{ padding: '0 24px', minHeight: 280 }}>
@@ -111,7 +106,7 @@ class App extends React.Component<MapAppPropsType> {
                                                     {this.props.initialized && <Route exact path='/samurai-way-main' render={() => <ProfileContainer/>}/>}
                                                     <Route exact path='/Dialogs' render={() => <DialogsContainer/>}/>
                                                     <Route exact path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
-                                                    <Route exact path='/Users' render={() => <UsersPage pageTitle='Users'/>}/>
+                                                    <Route exact path='/Developers' render={() => <UsersPage pageTitle='Users'/>}/>
                                                     <Route exact path='/Login' component={LoginPage}/>
                                                     <Route exact path='/News' component={News}/>
                                                     <Route exact path='/Music' component={Music}/>

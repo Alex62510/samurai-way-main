@@ -75,7 +75,7 @@ export const Users: FC<PropsType> = (props) => {
         if(currentPage!==1){query.page=String(currentPage)}
 
         history.push({
-            pathname: '/users',
+            pathname: '/Developers',
             search: queryString.stringify(query)
         })
     }, [filter, currentPage]);
