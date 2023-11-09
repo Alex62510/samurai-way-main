@@ -20,18 +20,16 @@ import {AppStateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 import {UsersPage} from "./components/Users/UsersContainer";
 import {LoginPage} from "./components/Login/LoginPage";
-import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu } from 'antd';
+import type {MenuProps} from 'antd';
+import {Avatar, Breadcrumb, Col, Layout, Menu, Row} from 'antd';
 import s from "./components/Navbar/Navbar.module.css";
+
 const ProfileContainer = lazy(() => import("./components/Profile/ProfileContainer"))
 const DialogsContainer = lazy(() => import("./components/Dialogs/DialogsContainer"))
 
-const { Header, Content, Footer, Sider } = Layout;
+const {Header, Content, Footer, Sider} = Layout;
 
-const items1: MenuProps['items'] = ['1', '2', '3'].map(key => ({
-    key,
-    label: `nav ${key}`,
-}));
+
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -50,15 +48,15 @@ function getItem(
 }
 
 const items2: MenuItem[] = [
-    getItem(<Link to='/Profile' >Profile page</Link>, '1',<UserOutlined /> ),
-    getItem(<Link to='/Dialogs' >Messages</Link>, '2', <FileOutlined />),
-    getItem(<Link to='/Developers' >Developers</Link>, '3', <TeamOutlined />),
-    getItem('User', 'sub1', <DesktopOutlined />, [
+    getItem(<Link to='/Profile'>Profile page</Link>, '1', <UserOutlined/>),
+    getItem(<Link to='/Dialogs'>Messages</Link>, '2', <FileOutlined/>),
+    getItem(<Link to='/Developers'>Developers</Link>, '3', <TeamOutlined/>),
+    getItem('User', 'sub1', <DesktopOutlined/>, [
         getItem('Tom', '4'),
         getItem('Alex', '5'),
     ]),
-    getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-    getItem('Files', '9', <DesktopOutlined />),
+    getItem('Team', 'sub2', <TeamOutlined/>, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
+    getItem('Files', '9', <DesktopOutlined/>),
 ];
 export type MapAppPropsType = MapStateToPropsType & MapDispatchToProps & RouteComponentProps
 type MapDispatchToProps = {
@@ -79,45 +77,54 @@ class App extends React.Component<MapAppPropsType> {
             <BrowserRouter>
                 <Layout>
                     <Header className="header">
-                        <div className="logo" />
-                        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
+
+                        <div className="logo"/>
+                        <Row>
+                            <Col span={23}>
+                                <Menu theme="dark" mode="horizontal" items={items1}/>
+                            </Col>
+                            <Col span={1}>
+                                <Avatar icon={<UserOutlined/>}/>
+                            </Col>
+                        </Row>
                     </Header>
-                    <Content style={{ padding: '0 50px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
+                    <Content style={{padding: '0 50px'}}>
+                        <Breadcrumb style={{margin: '16px 0'}}>
                             <Breadcrumb.Item>Home</Breadcrumb.Item>
                             <Breadcrumb.Item>List</Breadcrumb.Item>
                             <Breadcrumb.Item>App</Breadcrumb.Item>
                         </Breadcrumb>
-                        <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
+                        <Layout className="site-layout-background" style={{padding: '24px 0'}}>
                             <Sider className="site-layout-background" width={200}>
                                 <Menu
                                     mode="inline"
 
                                     // defaultSelectedKeys={[]}
                                     defaultOpenKeys={['sub1']}
-                                    style={{ height: '100%' }}
+                                    style={{height: '100%'}}
                                     items={items2}
                                 />
                             </Sider>
-                            <Content style={{ padding: '0 24px', minHeight: 280 }}>
+                            <Content style={{padding: '0 24px', minHeight: 280}}>
                                 <Suspense fallback={<Preloader/>}>
-                                                <Switch>
-                                                    <Route exact path='/' render={() => <ProfileContainer/>}/>
-                                                    {this.props.initialized && <Route exact path='/samurai-way-main' render={() => <ProfileContainer/>}/>}
-                                                    <Route exact path='/Dialogs' render={() => <DialogsContainer/>}/>
-                                                    <Route exact path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
-                                                    <Route exact path='/Developers' render={() => <UsersPage pageTitle='Users'/>}/>
-                                                    <Route exact path='/Login' component={LoginPage}/>
-                                                    <Route exact path='/News' component={News}/>
-                                                    <Route exact path='/Music' component={Music}/>
-                                                    <Route exact path='/Settings' component={Settings}/>
-                                                    <Route exact path='/*' render={() => <h1>404 PAGE NOT FOUND</h1>}/>
-                                                </Switch>
-                                            </Suspense>
+                                    <Switch>
+                                        <Route exact path='/' render={() => <ProfileContainer/>}/>
+                                        {this.props.initialized &&
+                                            <Route exact path='/samurai-way-main' render={() => <ProfileContainer/>}/>}
+                                        <Route exact path='/Dialogs' render={() => <DialogsContainer/>}/>
+                                        <Route exact path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
+                                        <Route exact path='/Developers' render={() => <UsersPage pageTitle='Users'/>}/>
+                                        <Route exact path='/Login' component={LoginPage}/>
+                                        <Route exact path='/News' component={News}/>
+                                        <Route exact path='/Music' component={Music}/>
+                                        <Route exact path='/Settings' component={Settings}/>
+                                        <Route exact path='/*' render={() => <h1>404 PAGE NOT FOUND</h1>}/>
+                                    </Switch>
+                                </Suspense>
                             </Content>
                         </Layout>
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                    <Footer style={{textAlign: 'center'}}>Ant Design ©2018 Created by Ant UED</Footer>
                 </Layout>
                 {/*<div className={'app-wrapper'}>*/}
                 {/*    <HeaderContainer/>*/}
@@ -143,6 +150,7 @@ class App extends React.Component<MapAppPropsType> {
         )
     }
 }
+
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         initialized: state.app.initialized
