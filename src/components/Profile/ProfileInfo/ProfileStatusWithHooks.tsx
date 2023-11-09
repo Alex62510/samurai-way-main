@@ -1,4 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import {Input} from "antd";
 
 export type ProfileStatusPropsType = {
     status: string
@@ -26,7 +27,7 @@ useEffect(()=>{
         <div>
             {editMode ?
                 <div>
-                    <input onChange={onStatusChange} value={status} autoFocus={true} onBlur={deactivateEditMode}/>
+                    <Input onChange={onStatusChange} value={status} autoFocus={true} onBlur={deactivateEditMode}/>
                 </div>
                 : <div>
                     <span onDoubleClick={activateEditMode}>{props.status || "-----"}</span>

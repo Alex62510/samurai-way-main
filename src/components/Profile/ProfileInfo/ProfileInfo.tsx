@@ -6,6 +6,7 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from "../../../assets/images/free-user.png";
 import {ProfileDataEditForm} from "./ProfileDataEditForm";
 import {UserContacts} from "./UserContacts";
+import {Button} from "antd";
 
 
 type ProfileInfoPropsType = {
@@ -57,7 +58,7 @@ type ProfileDataProps = {
 const ProfileData: FC<ProfileDataProps> = ({profile,isOwner,changeData}) => {
     return (
         <div>
-            {isOwner && <div> <button onClick={changeData}>EditData</button></div>}
+            {isOwner && <div> <Button onClick={changeData}>EditData</Button></div>}
             <div>
                 <b> Full name:</b> {profile.fullName}
             </div>
