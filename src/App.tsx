@@ -1,18 +1,11 @@
 import React, {lazy, Suspense} from 'react';
 import './App.css';
-import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, Link, NavLink, Route, RouteComponentProps, Switch, useHistory} from "react-router-dom";
+import {BrowserRouter, Link, Route, RouteComponentProps, Switch} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import HeaderContainer from "./components/Header/HeaderContainer";
-import {
-    DesktopOutlined,
-    FileOutlined,
-    PieChartOutlined,
-    TeamOutlined,
-    UserOutlined,
-} from '@ant-design/icons';
+
+import {DesktopOutlined, FileOutlined, TeamOutlined, UserOutlined,} from '@ant-design/icons';
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {initializedApp} from "./redux/app-reducer";
@@ -21,15 +14,13 @@ import Preloader from "./components/common/Preloader/Preloader";
 import {UsersPage} from "./components/Users/UsersContainer";
 import {LoginPage} from "./components/Login/LoginPage";
 import type {MenuProps} from 'antd';
-import {Avatar, Breadcrumb, Col, Layout, Menu, Row} from 'antd';
-import s from "./components/Navbar/Navbar.module.css";
+import {Breadcrumb, Layout, Menu} from 'antd';
+import {Header} from "./components/Header/Header";
 
 const ProfileContainer = lazy(() => import("./components/Profile/ProfileContainer"))
 const DialogsContainer = lazy(() => import("./components/Dialogs/DialogsContainer"))
 
-const {Header, Content, Footer, Sider} = Layout;
-
-
+const {Content, Footer, Sider} = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -66,7 +57,6 @@ type MapStateToPropsType = {
     initialized: boolean
 }
 
-
 class App extends React.Component<MapAppPropsType> {
     componentDidMount() {
         this.props.initializedApp()
@@ -76,18 +66,7 @@ class App extends React.Component<MapAppPropsType> {
         return (
             <BrowserRouter>
                 <Layout>
-                    <Header className="header">
-
-                        <div className="logo"/>
-                        <Row>
-                            <Col span={23}>
-                                <Menu theme="dark" mode="horizontal" items={items1}/>
-                            </Col>
-                            <Col span={1}>
-                                <Avatar icon={<UserOutlined/>}/>
-                            </Col>
-                        </Row>
-                    </Header>
+                    <Header/>
                     <Content style={{padding: '0 50px'}}>
                         <Breadcrumb style={{margin: '16px 0'}}>
                             <Breadcrumb.Item>Home</Breadcrumb.Item>
@@ -98,8 +77,6 @@ class App extends React.Component<MapAppPropsType> {
                             <Sider className="site-layout-background" width={200}>
                                 <Menu
                                     mode="inline"
-
-                                    // defaultSelectedKeys={[]}
                                     defaultOpenKeys={['sub1']}
                                     style={{height: '100%'}}
                                     items={items2}
@@ -124,28 +101,8 @@ class App extends React.Component<MapAppPropsType> {
                             </Content>
                         </Layout>
                     </Content>
-                    <Footer style={{textAlign: 'center'}}>Ant Design ©2018 Created by Ant UED</Footer>
+                    <Footer style={{textAlign: 'center'}}>Social network 2023 created by Alex Orlov</Footer>
                 </Layout>
-                {/*<div className={'app-wrapper'}>*/}
-                {/*    <HeaderContainer/>*/}
-                {/*    <Navbar/>*/}
-                {/*    <div className='app-wrapper-content'>*/}
-                {/*        <Suspense fallback={<Preloader/>}>*/}
-                {/*            <Switch>*/}
-                {/*                <Route exact path='/' render={() => <ProfileContainer/>}/>*/}
-                {/*                {this.props.initialized && <Route exact path='/samurai-way-main' render={() => <ProfileContainer/>}/>}*/}
-                {/*                <Route exact path='/Dialogs' render={() => <DialogsContainer/>}/>*/}
-                {/*                <Route exact path='/Profile/:userId?' render={() => <ProfileContainer/>}/>*/}
-                {/*                <Route exact path='/Users' render={() => <UsersPage pageTitle='Users'/>}/>*/}
-                {/*                <Route exact path='/Login' component={LoginPage}/>*/}
-                {/*                <Route exact path='/News' component={News}/>*/}
-                {/*                <Route exact path='/Music' component={Music}/>*/}
-                {/*                <Route exact path='/Settings' component={Settings}/>*/}
-                {/*                <Route exact path='/*' render={() => <h1>404 PAGE NOT FOUND</h1>}/>*/}
-                {/*            </Switch>*/}
-                {/*        </Suspense>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </BrowserRouter>
         )
     }
