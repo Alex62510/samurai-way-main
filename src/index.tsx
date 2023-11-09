@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -6,6 +7,8 @@ import {Provider} from "react-redux";
 import App from './App';
 import {DevSupport} from "@react-buddy/ide-toolbox";
 import {ComponentPreviews, useInitial} from "./dev";
+
+import 'antd/dist/antd.css'
 
 ReactDOM.render(
     <Provider store={store}>
