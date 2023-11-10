@@ -6,7 +6,7 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from "../../../assets/images/free-user.png";
 import {ProfileDataEditForm} from "./ProfileDataEditForm";
 import {UserContacts} from "./UserContacts";
-import {Button} from "antd";
+import {Button, Image} from "antd";
 
 
 type ProfileInfoPropsType = {
@@ -15,13 +15,13 @@ type ProfileInfoPropsType = {
     updateStatus: (status: string) => any
     isOwner: boolean
     savePhoto: any
-    saveProfile:any
+    saveProfile: any
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
-    const [editMode,setEditMode]=useState<boolean>(false)
+    const [editMode, setEditMode] = useState<boolean>(false)
 
-    const changeData =()=>{
+    const changeData = () => {
         setEditMode(true)
     }
     const mainPhotoSelectOn = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,16 +34,17 @@ function ProfileInfo(props: ProfileInfoPropsType) {
             {
                 !props.profile ? <Preloader/> : <div>
                     <div>
-                        <img
-                            src={"https://wonder-day.com/wp-content/uploads/2020/04/wonder-day-images-rainbow-37-1024x576.jpg"}/>
+                        <Image preview={false}
+                               src={"https://cdn.pixabay.com/photo/2018/01/17/04/14/industry-3087393_1280.jpg"}/>
                     </div>
                     <div className={s.descriptionBlock}>
-                        <img src={props.profile.photos.large || userPhoto} className={s.avatarPhoto}/>
+                        <Image preview={false} src={props.profile.photos.large || userPhoto} className={s.avatarPhoto}/>
                         {props.isOwner && <input type={"file"} onChange={mainPhotoSelectOn}/>}
                         <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
                         {editMode ?
-                            <ProfileDataEditForm setEditMode={setEditMode} profile={props.profile} saveProfile={props.saveProfile}/> :
-                            <ProfileData profile={props.profile} isOwner={props.isOwner} changeData={changeData}/> }
+                            <ProfileDataEditForm setEditMode={setEditMode} profile={props.profile}
+                                                 saveProfile={props.saveProfile}/> :
+                            <ProfileData profile={props.profile} isOwner={props.isOwner} changeData={changeData}/>}
                     </div>
                 </div>}
         </div>
@@ -53,12 +54,12 @@ function ProfileInfo(props: ProfileInfoPropsType) {
 type ProfileDataProps = {
     profile: ProfileType
     isOwner: boolean
-    changeData:()=>void
+    changeData: () => void
 }
-const ProfileData: FC<ProfileDataProps> = ({profile,isOwner,changeData}) => {
+const ProfileData: FC<ProfileDataProps> = ({profile, isOwner, changeData}) => {
     return (
         <div>
-            {isOwner && <div> <Button onClick={changeData}>EditData</Button></div>}
+            {isOwner && <div><Button onClick={changeData}>EditData</Button></div>}
             <div>
                 <b> Full name:</b> {profile.fullName}
             </div>

@@ -23,33 +23,6 @@ const DialogsContainer = lazy(() => import("./components/Dialogs/DialogsContaine
 
 const {Content, Footer, Sider} = Layout;
 
-// type MenuItem = Required<MenuProps>['items'][number];
-//
-// function getItem(
-//     label: React.ReactNode,
-//     key: React.Key,
-//     icon?: React.ReactNode,
-//     children?: MenuItem[],
-// ): MenuItem {
-//     return {
-//         key,
-//         icon,
-//         children,
-//         label,
-//     } as MenuItem;
-// }
-//
-// const items2: MenuItem[] = [
-//     getItem(<Link to='/Profile'>Profile page</Link>, '1', <UserOutlined/>),
-//     getItem(<Link to='/Dialogs'>Messages</Link>, '2', <FileOutlined/>),
-//     getItem(<Link to='/Developers'>Developers</Link>, '3', <TeamOutlined/>),
-//     getItem('User', 'sub1', <DesktopOutlined/>, [
-//         getItem('Tom', '4'),
-//         getItem('Alex', '5'),
-//     ]),
-//     getItem('Team', 'sub2', <TeamOutlined/>, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-//     getItem('Files', '9', <DesktopOutlined/>),
-// ];
 export type MapAppPropsType = MapStateToPropsType & MapDispatchToProps & RouteComponentProps
 type MapDispatchToProps = {
     initializedApp: () => void
@@ -71,8 +44,8 @@ class App extends React.Component<MapAppPropsType> {
                     <Content style={{padding: '0 50px'}}>
                         <Breadcrumb style={{margin: '16px 0'}}>
                             <Breadcrumb.Item>Home</Breadcrumb.Item>
-                            <Breadcrumb.Item>List</Breadcrumb.Item>
-                            <Breadcrumb.Item>App</Breadcrumb.Item>
+                            {/*<Breadcrumb.Item>List</Breadcrumb.Item>*/}
+                            {/*<Breadcrumb.Item>App</Breadcrumb.Item>*/}
                         </Breadcrumb>
                         <Layout className="site-layout-background" style={{padding: '24px 0'}}>
                             <Sidebar/>
