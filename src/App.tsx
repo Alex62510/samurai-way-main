@@ -14,8 +14,10 @@ import {Breadcrumb, Layout} from 'antd';
 import {Header} from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/sidebar";
 
+
 const ProfileContainer = lazy(() => import("./components/Profile/ProfileContainer"))
 const DialogsContainer = lazy(() => import("./components/Dialogs/DialogsContainer"))
+const ChatPage = lazy(() => import("./pages/chat/chatPage"))
 
 const {Content, Footer} = Layout;
 
@@ -50,6 +52,7 @@ const App: FC = () => {
                                     <Route exact path='/Profile/:userId?' render={() => <ProfileContainer/>}/>
                                     <Route exact path='/Developers' render={() => <UsersPage pageTitle='Users'/>}/>
                                     <Route exact path='/Login' component={LoginPage}/>
+                                    <Route exact path='/Chat' component={ChatPage}/>
                                     <Route exact path='/News' component={News}/>
                                     <Route exact path='/Music' component={Music}/>
                                     <Route exact path='/Settings' component={Settings}/>
