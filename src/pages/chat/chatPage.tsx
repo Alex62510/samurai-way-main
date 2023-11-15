@@ -34,7 +34,8 @@ const Messages: FC = () => {
 
     useEffect(() => {
         ws.addEventListener("message", (e) => {
-           setMessages((prevMessages)=>[...prevMessages,...JSON.parse(e.data)])
+            const parse=JSON.parse(e.data)
+           setMessages((prevMessages)=>[...prevMessages,...parse])
         })
     }, []);
 
