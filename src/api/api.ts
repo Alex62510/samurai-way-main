@@ -1,5 +1,4 @@
 import axios from "axios";
-import {ProfileType} from "../redux/profile-reducer";
 
 
 export const instanse = axios.create({
