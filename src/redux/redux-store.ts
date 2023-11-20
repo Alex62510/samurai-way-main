@@ -9,7 +9,7 @@ import {reducer as formReducer} from "redux-form"
 import appReducer from "./app-reducer";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {useDispatch} from "react-redux";
-import chatReducer from "./chat-reducer";
+import chatReducer, {ChatActionsType} from "./chat-reducer";
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
     chat:chatReducer
 })
 export type AppStateType = ReturnType<typeof rootReducer>
-export type AppActionType = ActionAuth | ActionMessage | ActionProfile | ActionUsers
+export type AppActionType = ActionAuth | ActionMessage | ActionProfile | ActionUsers | ChatActionsType
 export type AppThunk<ReturnType = void|any> = ThunkAction<ReturnType, AppStateType, unknown, AppActionType>
 export type AppDispatch = ThunkDispatch<AppStateType, unknown, AnyAction>;
 

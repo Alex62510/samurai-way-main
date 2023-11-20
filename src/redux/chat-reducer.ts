@@ -1,6 +1,6 @@
 import {chatAPI, ChatMessageType} from "../api/chat-api";
 import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "./redux-store";
+import {AppStateType, AppThunk} from "./redux-store";
 import {Dispatch} from "redux";
 import message from "../components/Dialogs/Message/Message";
 
@@ -8,7 +8,8 @@ import message from "../components/Dialogs/Message/Message";
 const initialState = {
     messages: [] as ChatMessageType[]
 }
-const chatReducer = (state:InitialStateType = initialState, action: ActionsType): InitialStateType => {
+const chatReducer = (state: InitialStateType = initialState, action: ChatActionsType): InitialStateType => {
+    debugger
     switch (action.type) {
         case "SN/chat/MESSAGES_RECEIVED":
             return {
@@ -19,30 +20,36 @@ const chatReducer = (state:InitialStateType = initialState, action: ActionsType)
     }
 }
 
-let _newMessageHandler:((messages:ChatMessageType[])=>void) | null=null
-const newMessageHandlerCreator=(dispatch:Dispatch)=> (messages:ChatMessageType[])=>{
-    if (_newMessageHandler===null){
-        _newMessageHandler=(messages)=>{
+let _newMessageHandler: ((messages: ChatMessageType[]) => void) | null = null
+const newMessageHandlerCreator = (dispatch: Dispatch) =>  {
+    if (_newMessageHandler === null) {
+        _newMessageHandler = (messages) => {
             dispatch(messagesReceived(messages))
         }
     }
     return _newMessageHandler
 }
-export const startMessagesListening=():ThinkType=>async (dispatch)=>{
-   chatAPI.subscribe(newMessageHandlerCreator(dispatch))
+export const startMessagesListening = (): AppThunk => async (dispatch) => {
+    chatAPI.start()
+
+    chatAPI.subscribe(newMessageHandlerCreator(dispatch))
 }
-export const stopMessagesListening=():ThinkType=>async (dispatch)=>{
+export const stopMessagesListening = (): AppThunk => async (dispatch) => {
     chatAPI.unsubscribe(newMessageHandlerCreator(dispatch))
+    chatAPI.stop()
+}
+export const sendMessage = (message: string): AppThunk => async (dispatch) => {
+    chatAPI.sendMessage(message)
 }
 
 
 const messagesReceived = (messages: ChatMessageType[]) => {
     return {type: "SN/chat/MESSAGES_RECEIVED", payload: messages} as const
 }
- type MessageReceivedType=ReturnType<typeof messagesReceived>
+type MessageReceivedType = ReturnType<typeof messagesReceived>
 export default chatReducer
 
-type ThinkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType >
+type ThinkType = ThunkAction<Promise<void>, AppStateType, unknown, ChatActionsType>
 
 export type InitialStateType = typeof initialState
-type ActionsType = MessageReceivedType
+export type ChatActionsType = MessageReceivedType

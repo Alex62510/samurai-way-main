@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState,} from 'react';
 import style from "./chatPage.module.css"
 import {Button, Image} from "antd";
 import {AppStateType, useAppDispatch} from "../../redux/redux-store";
-import {startMessagesListening, stopMessagesListening} from "../../redux/chat-reducer";
+import {sendMessage, startMessagesListening, stopMessagesListening} from "../../redux/chat-reducer";
 import {useSelector} from "react-redux";
 
 export type ChatMessageType = {
@@ -25,6 +25,7 @@ const Chat: FC = () => {
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(startMessagesListening())
+
         return ()=>{
             dispatch(stopMessagesListening())
         }
@@ -49,7 +50,7 @@ const Messages: FC = () => {
     )
 }
 const Message: FC<{ message: ChatMessageType }> = ({message}) => {
-
+    debugger
     return (
         <div>
             <Image src={message.photo} className={style.avatar} preview={false}/>
@@ -64,21 +65,13 @@ const AddMessageForm: FC = () => {
     const [message, setMessage] = useState('')
     const [isReady, setIsReady] = useState<'pending' | 'ready'>('pending')
 
-    useEffect(() => {
-        const openHandler = () => {
-            setIsReady('ready')
-        }
-        wsChannel?.addEventListener('open', openHandler)
-        return () => {
-            wsChannel?.removeEventListener("open", openHandler)
-        }
-    }, [wsChannel]);
+    const dispatch = useAppDispatch()
 
-    const sendMessage = () => {
+    const sendMessageHandler = () => {
         if (!message) {
             return
         }
-        wsChannel?.send(message)
+        dispatch(sendMessage(message))
         setMessage('')
     }
     return (
@@ -89,7 +82,7 @@ const AddMessageForm: FC = () => {
                 }} value={message}></textarea>
             </div>
             <div>
-                <Button disabled={wsChannel == null || isReady !== 'ready'} onClick={sendMessage}>Send</Button>
+                <Button disabled={false} onClick={sendMessageHandler}>Send</Button>
             </div>
         </div>
 
