@@ -8,8 +8,6 @@ import App from './App';
 import {DevSupport} from "@react-buddy/ide-toolbox";
 import {ComponentPreviews, useInitial} from "./dev";
 
-import 'antd/dist/antd.css'
-
 ReactDOM.render(
     <Provider store={store}>
         <DevSupport ComponentPreviews={ComponentPreviews}
