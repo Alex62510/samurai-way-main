@@ -14,10 +14,12 @@ const messageHandler = (e: MessageEvent) => {
     subscribers["messages-received"].forEach(s => s(parse))
 }
 const openHandler = () => {
+
     notifySubscibersAboutStatus("ready")
 }
 const errorHandler = () => {
     notifySubscibersAboutStatus("error")
+
 }
 const cleanUp = () => {
     ws?.removeEventListener('close', closeHandler)
@@ -27,6 +29,7 @@ const cleanUp = () => {
 }
 const notifySubscibersAboutStatus=(status:StatusType)=>{
     subscribers["status-changed"].forEach(s=>s(status))
+    console.log(status)
 }
 function createChannel() {
 

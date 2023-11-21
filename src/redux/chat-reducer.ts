@@ -10,13 +10,14 @@ const initialState = {
     status: "pending" as StatusType
 }
 const chatReducer = (state: InitialStateType = initialState, action: ChatActionsType): InitialStateType => {
-    debugger
+
     switch (action.type) {
         case "SN/chat/MESSAGES_RECEIVED":
             return {
                 ...state, messages: [...state.messages, ...action.payload.messages]
             }
         case "SN/chat/STATUS_CHANGED":
+
             return {
                 ...state, status: action.payload.status
             }
@@ -41,7 +42,7 @@ const statusChangingHandlerCreator = (dispatch: Dispatch) => {
             dispatch(statusChanged(status))
         }
     }
-    return _newMessageHandler
+    return _statusChangingHandler
 }
 export const startMessagesListening = (): AppThunk => async (dispatch) => {
     chatAPI.start()

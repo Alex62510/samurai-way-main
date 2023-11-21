@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState,} from 'react';
+import React, {FC, useEffect, useRef, useState,} from 'react';
 import style from "./chatPage.module.css"
 import {Button, Image} from "antd";
 import {AppStateType, useAppDispatch} from "../../redux/redux-store";
@@ -21,12 +21,14 @@ const ChatPage: FC = () => {
     );
 };
 const Chat: FC = () => {
-    const status=useSelector((state:AppStateType)=>state.chat.status)
+    const status = useSelector((state: AppStateType) => state.chat.status)
     const dispatch = useAppDispatch()
+
+
     useEffect(() => {
         dispatch(startMessagesListening())
 
-        return ()=>{
+        return () => {
             dispatch(stopMessagesListening())
         }
     }, []);
@@ -34,27 +36,44 @@ const Chat: FC = () => {
 
     return (
         <div>
-            {status==="error"?<div>Error please refresh page </div>:
+            {status === "error" && <div>Error please refresh page </div>}
             <>
-                <Messages />
-                <AddMessageForm />
-            </>}
+                <Messages/>
+                <AddMessageForm/>
+            </>
 
         </div>
     )
 }
 const Messages: FC = () => {
+    const messagesAnchorRef = useRef<HTMLDivElement>(null)
+    const messages = useSelector((state: AppStateType) => state.chat.messages)
+    const [isAutoScroll, setIsAutoScroll] = useState(true)
 
-   const messages=useSelector((state:AppStateType) =>state.chat.messages )
+    const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        const element = e.currentTarget
+        if (Math.abs((element.scrollHeight - element.scrollTop) - element.clientHeight) < 300) {
+            !isAutoScroll && setIsAutoScroll(true)
+        } else {
+            isAutoScroll && setIsAutoScroll(false)
+        }
+    }
+    useEffect(() => {
+        if (isAutoScroll) {
+            messagesAnchorRef.current?.scrollIntoView({behavior: 'smooth'})
+        }
+
+    }, [messages]);
 
     return (
-        <div className={style.messages}>
+        <div className={style.messages} onScroll={scrollHandler}>
             {messages.map((m, index) => <Message key={index} message={m}/>)}
+            <div ref={messagesAnchorRef}></div>
         </div>
     )
 }
 const Message: FC<{ message: ChatMessageType }> = ({message}) => {
-    debugger
+
     return (
         <div>
             <Image src={message.photo} className={style.avatar} preview={false}/>
@@ -69,7 +88,7 @@ const AddMessageForm: FC = () => {
     const [message, setMessage] = useState('')
 
     const dispatch = useAppDispatch()
-    const status=useSelector((state:AppStateType)=>state.chat.status)
+    const status = useSelector((state: AppStateType) => state.chat.status)
 
     const sendMessageHandler = () => {
         if (!message) {
@@ -86,7 +105,7 @@ const AddMessageForm: FC = () => {
                 }} value={message}></textarea>
             </div>
             <div>
-                <Button disabled={status!=="ready"} onClick={sendMessageHandler}>Send</Button>
+                <Button disabled={status !== "ready"} onClick={sendMessageHandler}>Send</Button>
             </div>
         </div>
 
