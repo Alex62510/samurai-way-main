@@ -27,10 +27,11 @@ const cleanUp = () => {
     ws?.removeEventListener('open', openHandler)
     ws?.removeEventListener('error', errorHandler)
 }
-const notifySubscibersAboutStatus=(status:StatusType)=>{
-    subscribers["status-changed"].forEach(s=>s(status))
+const notifySubscibersAboutStatus = (status: StatusType) => {
+    subscribers["status-changed"].forEach(s => s(status))
     console.log(status)
 }
+
 function createChannel() {
 
     cleanUp()
@@ -54,7 +55,7 @@ export const chatAPI = {
         cleanUp()
         ws?.close()
     },
-    subscribe(eventName: EventsNamesType, callback: MessagesReceivedSubscriberType | StatusChangedSubscriberType|null) {
+    subscribe(eventName: EventsNamesType, callback: MessagesReceivedSubscriberType | StatusChangedSubscriberType ) {
         // @ts-ignore
         subscribers[eventName].push(callback)
 
@@ -63,7 +64,7 @@ export const chatAPI = {
             subscribers[eventName] = subscribers[eventName].filter(s => s !== callback)
         }
     },
-    unsubscribe(eventName: EventsNamesType, callback: MessagesReceivedSubscriberType | StatusChangedSubscriberType|null) {
+    unsubscribe(eventName: EventsNamesType, callback: MessagesReceivedSubscriberType | StatusChangedSubscriberType ) {
         // @ts-ignore
         subscribers[eventName] = subscribers[eventName].filter(s => s !== callback)
     },
@@ -73,12 +74,13 @@ export const chatAPI = {
     }
 }
 
-type MessagesReceivedSubscriberType = (messages: ChatMessageType[]) => void
+type MessagesReceivedSubscriberType = (messages: ChatMessageApiType[]) => void
 type StatusChangedSubscriberType = (status: StatusType) => void
-export type StatusType = "pending" | 'ready'| 'error'
-export type ChatMessageType = {
+export type StatusType = "pending" | 'ready' | 'error'
+export type ChatMessageApiType = {
     userId: number,
     userName: string,
     message: string,
-    photo: string
+    photo: string,
+
 }

@@ -67,12 +67,12 @@ const Messages: FC = () => {
 
     return (
         <div className={style.messages} onScroll={scrollHandler}>
-            {messages.map((m, index) => <Message key={index} message={m}/>)}
+            {messages.map((m, index) => <Message key={m.id} message={m}/>)}
             <div ref={messagesAnchorRef}></div>
         </div>
     )
 }
-const Message: FC<{ message: ChatMessageType }> = ({message}) => {
+const Message:FC<{ message: ChatMessageType }> =  React.memo(({message}) => {
 
     return (
         <div>
@@ -83,7 +83,7 @@ const Message: FC<{ message: ChatMessageType }> = ({message}) => {
             <hr/>
         </div>
     )
-}
+})
 const AddMessageForm: FC = () => {
     const [message, setMessage] = useState('')
 

@@ -1,10 +1,9 @@
-import {chatAPI, ChatMessageType, StatusType} from "../api/chat-api";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType, AppThunk} from "./redux-store";
+import {chatAPI, ChatMessageApiType, StatusType} from "../api/chat-api";
+import {AppThunk} from "./redux-store";
 import {Dispatch} from "redux";
-import message from "../components/Dialogs/Message/Message";
+import {v1} from 'uuid'
 
-
+type ChatMessageType = ChatMessageApiType & { id: string }
 const initialState = {
     messages: [] as ChatMessageType[],
     status: "pending" as StatusType
@@ -14,7 +13,11 @@ const chatReducer = (state: InitialStateType = initialState, action: ChatActions
     switch (action.type) {
         case "SN/chat/MESSAGES_RECEIVED":
             return {
-                ...state, messages: [...state.messages, ...action.payload.messages]
+                ...state,
+                messages: [...state.messages, ...action.payload.messages.map(m => ({
+                    ...m,
+                    id: v1()
+                }))].filter((t, index, array) => index >= array.length - 100)
             }
         case "SN/chat/STATUS_CHANGED":
 
@@ -26,7 +29,7 @@ const chatReducer = (state: InitialStateType = initialState, action: ChatActions
     }
 }
 
-let _newMessageHandler: ((messages: ChatMessageType[]) => void) | null = null
+let _newMessageHandler: ((messages: ChatMessageApiType[]) => void) | null = null
 const newMessageHandlerCreator = (dispatch: Dispatch) => {
     if (_newMessageHandler === null) {
         _newMessageHandler = (messages) => {
@@ -47,7 +50,7 @@ const statusChangingHandlerCreator = (dispatch: Dispatch) => {
 export const startMessagesListening = (): AppThunk => async (dispatch) => {
     chatAPI.start()
 
-    chatAPI.subscribe('messages-received',newMessageHandlerCreator(dispatch))
+    chatAPI.subscribe('messages-received', newMessageHandlerCreator(dispatch))
     chatAPI.subscribe("status-changed", statusChangingHandlerCreator(dispatch))
 }
 export const stopMessagesListening = (): AppThunk => async (dispatch) => {
@@ -60,7 +63,7 @@ export const sendMessage = (message: string): AppThunk => async (dispatch) => {
 }
 
 
-const messagesReceived = (messages: ChatMessageType[]) => {
+const messagesReceived = (messages: ChatMessageApiType[]) => {
     return {type: "SN/chat/MESSAGES_RECEIVED", payload: {messages}} as const
 }
 const statusChanged = (status: StatusType) => {
