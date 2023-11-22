@@ -31,7 +31,7 @@ const Chat: FC = () => {
         return () => {
             dispatch(stopMessagesListening())
         }
-    }, []);
+    }, [dispatch]);
 
 
     return (
@@ -63,7 +63,7 @@ const Messages: FC = () => {
             messagesAnchorRef.current?.scrollIntoView({behavior: 'smooth'})
         }
 
-    }, [messages]);
+    }, [messages,isAutoScroll]);
 
     return (
         <div className={style.messages} onScroll={scrollHandler}>

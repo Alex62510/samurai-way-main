@@ -2,8 +2,8 @@ import React, {FC} from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../common/FormsControls/FormsControls";
 import {maxLengthCreator, required} from "../../utils/validators/validators";
-import {connect, useSelector} from "react-redux";
-import {login, logout} from "../../redux/auth-reducer";
+import {useSelector} from "react-redux";
+import {login} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {AppStateType, useAppDispatch} from "../../redux/redux-store";
 import style from './../common/FormsControls/FormsControls.module.css'

@@ -1,5 +1,6 @@
 import React from "react";
 import s from './Post.module.css'
+import {Image} from "antd";
 
 type PostPropsType={
     message:string
@@ -9,7 +10,7 @@ type PostPropsType={
 const Post = (props:PostPropsType) => {
     return (
         <div className={s.item}>
-            <img
+            <Image alt=''
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShwIXO7TuAocUZF1Jq5mJuRs78wGsf3Qe5-w&usqp=CAU"/>
             {props.message}
 

@@ -28,7 +28,7 @@ const App: FC = () => {
 
     useEffect(() => {
         dispatch(initializedApp())
-    }, []);
+    }, [dispatch]);
 
     return (
         <BrowserRouter>

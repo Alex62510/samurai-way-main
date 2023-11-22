@@ -13,8 +13,7 @@ export type MyPostsPropsType = {
 const maxLength10 = maxLengthCreator(20)
 
 const MyPosts=React.memo((props: MyPostsPropsType)=> {
-    console.log("render")
-    let postMessageRef = React.createRef<HTMLTextAreaElement>()
+
     const onAddPost = (value: string | any) => {
         props.addPost(value.newPostText)
     }
